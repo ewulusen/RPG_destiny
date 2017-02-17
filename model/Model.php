@@ -150,7 +150,10 @@ public function getEnemy($i,$j)
 				array_push($enemy,$sor['B_CON']);//8
 				array_push($enemy,$sor['B_XP']);//9
 				array_push($enemy,$sor['B_LVL']);//10
-setcookie("enemyID",$beast_id,time()+1800,'/');		
+				array_push($enemy,$beast_id);//11		
+setcookie("enemyID",$beast_id);	
+$_COOKIE['enemyID']=$beast_id;
+
 	return $enemy;
 }
 public function plUpdate($xp,$wol,$loot)
@@ -183,7 +186,7 @@ if($wol=='W')
 			}
 			else
 			{
-				$sql='insert into itemek (I_PID,I_FID,I_FAJ,I_ON) values ("'.$_COOKIE['cid'].'","'.$loot_a[1].'","'.$loot_a[0].'","0")';
+				$sql='insert into itemek_dungeon (I_PID,I_FID,I_FAJ,I_ON) values ("'.$_COOKIE['cid'].'","'.$loot_a[1].'","'.$loot_a[0].'","0")';
 				//echo $sql;
 				$GLOBALS['conn']->query($sql);
 			}
@@ -224,9 +227,9 @@ public function gameFieldCleaning()
 	$res=$GLOBALS['conn']->query($sql);
 	$sor=$res->fetch_array(MYSQLI_BOTH);
 	$sql="update game set P_X=".$sor['E_X'].",P_Y=".$sor['E_Y']." where G_ID=".$_SESSION['dname']."";
-	$res=$GLOBALS['conn']->query($sql);
+	$GLOBALS['conn']->query($sql);
 	$sql="update enemy set EL=0 where G_ID=".$_SESSION['dname']." and E_ID=".$_COOKIE['enemyID']."";
-	$res=$GLOBALS['conn']->query($sql);
+	$GLOBALS['conn']->query($sql);
 	unset($_COOKIE['enemyID']);
 	setcookie('enemyID', '', time()-3600, '/teszt');
 	unset($_COOKIE['xp']);

@@ -1,0 +1,42 @@
+<?php
+class Room
+{
+	private $id;
+	private $xpoz;
+	private $ypoz;
+	private $connected;
+	private $dimenzio;
+	function __construct($par1,$par2,$part3,$part4 ) 
+	{
+   $this->id = $par1;
+   $this->xpoz = $par2;
+   $this->ypoz = $part3;
+   $this->dimenzio = $part4;
+   $this->connected='0';
+	}
+function getId()
+{
+	return $this->id;
+}
+function getXPoz()
+{
+	return $this->xpoz;
+}
+function getYPoz()
+{
+	return $this->ypoz;
+}
+function getconne()
+{
+	return $this->connected;
+}
+function getDim()
+{
+	return $this->dimenzio;
+}
+function setconne($conn)
+{
+	$this->connected=$conn;;
+}
+	
+}

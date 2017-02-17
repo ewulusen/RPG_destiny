@@ -1,0 +1,268 @@
+a {
+  color: #900;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  position: relative;
+}
+
+area[title]:hover:after {
+  content: attr(title);
+  padding: 4px 8px;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  white-space: nowrap;
+  z-index: 20px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0px 0px 4px #222;
+  -webkit-box-shadow: 0px 0px 4px #222;
+  box-shadow: 0px 0px 4px #222;
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+}
+.breakWord {
+  width: 10px;
+  background: gold;
+  overflow-wrap: break-word;
+}
+.border1
+{
+opacity:0.80;
+border-style: solid;
+border-width: 10px 15px 15px 15px;
+-moz-border-image: url(../../img/backgrounds/../../img/backgrounds/border.png) 10 15 15 15 stretch;
+-webkit-border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+-o-border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+overflow:scroll;
+}
+.border3
+{
+opacity:0.80;
+border-style: solid;
+border-width: 10px 15px 15px 15px;
+-moz-border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+-webkit-border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+-o-border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
+
+}
+.border2
+{border-style: solid;
+background-color:#ece7a6;
+border-width: 5px 5px 5px 5px;
+-moz-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
+-webkit-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
+-o-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
+border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
+
+color:#000000;
+}
+.fajcard
+{
+	width:25%;
+	height:25%;
+   
+}
+.elf
+{
+	content:url(../../img/faj/elfsymbol.png);
+}
+.elf:hover
+{
+	content:url(../../img/faj/elfcard.png);
+	
+
+}
+.orc
+{
+	content:url(../../img/faj/orcsymbol.png);
+}
+.orc:hover
+{
+	content:url(../../img/faj/orccard.png);
+}
+.human
+{
+	content:url(../../img/faj/humansymbol.png);
+}
+.human:hover
+{
+	content:url(../../img/faj/humancard.png);
+}
+.dwarf
+{
+	content:url(../../img/faj/dwarfsymbol.png);
+}
+.dwarf:hover
+{
+	content:url(../../img/faj/dwarfcard.png);
+}
+.mainpage
+{
+	width:100%;
+	height:100%;
+	background-image:url(../../img/backgrounds/page-bg.jpg); 
+	background-size:100%;
+	background-repeat:no-repeat;
+}
+.fname
+{
+text-shadow:11px 14px 3px rgba(0,0,0,0.3);
+font-weight:normal;color:#C94C26;
+letter-spacing:1pt;
+word-spacing:1pt;
+font-size:39px;
+text-align:center;
+font-family:comic sans, comic sans ms, cursive, verdana, arial, sans-serif;
+line-height:0;
+}
+.varos
+{
+	color:#ffffff;
+}
+.btf
+{
+	display:none;
+}
+.move
+{
+background-color:#ffffff;	
+}
+#borderedf
+{
+background-size:100% 100%;
+background-repeat:no-repeat;
+}
+#loginpage
+{
+opacity: 0.9;
+
+}
+.charChuser
+{
+	background-color:#ffffff;
+	color:#000000;
+}
+.dungeonAlap
+{
+	background-image:url(../../img/dungeon/a2.jpg);
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	
+}
+.dungeonLephet
+{
+	
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	opacity:0.3;
+	background-color: #ffa;
+	
+}
+.deathEnemy
+{
+	background-image:url(../../img/elements/deathEnemy.png);
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	background-color: #ffa;
+	
+}
+.openChest
+{
+	background-image:url(../../img/elements/openChest.png);
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	background-color: #ffa;
+	
+}
+.dungeonFolyoso
+{
+	background-image:url(../../img/dungeon/a6.jpg);
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	
+}
+.dungeonLephetF
+{
+	background-image:url(../../img/dungeon/a6.jpg);
+	background-size:75px 75px;
+	background-repeat: no-repeat;
+	opacity:0.3;
+	background-color: #ffa;
+	
+}
+.dungeonHatter
+{
+	background-color:#000000;
+	
+}
+.story{
+  color: #bcb884; 
+  font-family: Snell Roundhand, cursive;
+  font-size: 35px;
+  margin: 10px 0 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 26em;
+  animation: type 3s steps(60, end); 
+}
+
+.story:nth-child(2){
+  animation: type2 8s steps(60, end);
+}
+
+.stroya{
+  color: lime;
+  text-decoration: none;
+}
+
+.storyspan{
+	color: #bcb884; 
+  font-family: Snell Roundhand, cursive;
+  font-size: 40px;
+  margin: 10px 0 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 24em;
+  animation: blink 3s infinite;
+}
+.storyBCG
+{
+	background:#000000;
+}
+@keyframes type{ 
+  from { width: 0; } 
+} 
+
+@keyframes type2{
+  0%{width: 0;}
+  50%{width: 0;}
+  100%{ width: 100; } 
+} 
+
+@keyframes blink{
+  to{opacity: .0;}
+}
+::selection{
+  background: black;
+}
+#playerpic
+{
+	position :relative;
+	z-index: 1;
+}
+#attackMenu
+{
+	display:none;
+}

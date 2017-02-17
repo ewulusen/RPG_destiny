@@ -1,0 +1,230 @@
+<?php
+//include_once("model/Book.php");
+
+class Model {
+
+	public function loginCheck($username,$password)
+	{
+		
+		$sql="(SELECT * FROM `FELHASZ`WHERE FH_FHNEV='$username' AND FH_JEL='$password' )";
+		
+        $eredmeny=mysql_query($sql) or die(mysql_error());
+if (mysql_num_rows($eredmeny) != 1) {
+	return 0;
+}
+else {
+while ($sor=mysql_fetch_array($eredmeny)){	
+		setcookie('pid',$sor['FH_ID']);
+		setcookie('nev',$sor['FH_FHNEV']);
+		}
+return 1;
+
+	}}
+	
+	public function getNormalStats($kaszt,$faj)
+	{
+		$statok=array();
+		$sql=mysql_query("SELECT * FROM fajok,kasztok WHERE fajok.F_FAJ='$faj' AND  kasztok.F_FAJ='$kaszt'");
+		while ($sor=mysql_fetch_array($sql)){	
+		for($i=0;$i<20;$i++)
+			array_push($statok,$sor[$i]);
+		}
+		return $statok;
+		
+	}
+
+	public function createNewChar($values)
+	{
+		$stat=explode(',',$values);
+		mysql_query("INSERT INTO `karakterl`(`KAR_KASZT`, `KAR_FAJ`, `K_STR`, `K_AGI`, `K_REF`, 
+		`K_DEF`,`K_DEX`, `K_INT`, `K_LUC`, `K_CON`,`K_APOINT`,`K_NEV`,K_KIE) 
+		VALUES ('".$stat['1']."','".$stat['0']."','".$stat['2']."','".$stat['3']."','".$stat['6']."','".$stat['4']."','".$stat['5']."','".$stat['7']."','".$stat['9']."','".$stat['8']."','".$stat['10']."','".$stat['11']."',
+		'".$_COOKIE['pid']."')") or die("hiba: ".mysql_error());
+		header ("location:index.php?hol=main");
+}
+public function upChar($values)
+	{		$stat=explode(',',$values);
+	$sql="update `karakterl` set`K_STR`='".$stat['0']."', `K_AGI`='".$stat['1']."', `K_REF`='".$stat['4']."', 
+		`K_DEF`='".$stat['2']."',`K_DEX`='".$stat['3']."', `K_INT`='".$stat['5']."', `K_LUC`='".$stat['7']."', `K_CON`='".$stat['6']."',`K_APOINT`='".$stat['8']."'
+		where KAR_ID='".$stat['9']."'";
+		echo $sql;
+		mysql_query($sql) or die("hiba: ".mysql_error());
+		header ("location:index.php?hol=main");
+}
+public function getAllChar()
+	{
+		$charok=array();
+		$sql=mysql_query("SELECT * FROM karakterl WHERE K_KIE='".$_COOKIE['pid']."'");
+		while ($sor=mysql_fetch_array($sql)){	
+			array_push($charok,$sor['KAR_FAJ'].$sor['KAR_KASZT'].','.$sor['KAR_ID'].','.$sor['K_NEV']);
+		}
+		return $charok;
+		
+	}
+	public function getChar($cid)
+	{
+		$charok=array();
+		$sql="SELECT `K_STR`, `K_AGI`, `K_REF`, 
+		`K_DEF`,K_LVL,`K_DEX`, `K_INT`, `K_LUC`, F_DMG,`K_CON`, 
+		`P_AC`,K_NEV,KAR_FAJ,KAR_KASZT,K_APOINT FROM `karakterl`,fegyverek,pancel WHERE KAR_ID='".$cid."' and fegyverek.F_ID=K_WEAPONS and pancel.P_ID=K_ARMOR";
+		$res=mysql_query($sql);
+		//echo $sql;
+		while ($sor=mysql_fetch_array($res)){	
+			array_push($charok,$sor['K_STR']);
+			array_push($charok,$sor['K_AGI']);
+			array_push($charok,$sor['K_REF']);
+			array_push($charok,$sor['K_DEF']);
+			array_push($charok,$sor['K_DEX']);
+			array_push($charok,$sor['K_INT']);
+			array_push($charok,$sor['K_LUC']);
+			array_push($charok,$sor['K_CON']);
+			array_push($charok,$sor['F_DMG']);
+			array_push($charok,$sor['P_AC']);
+			array_push($charok,$sor['KAR_FAJ']);
+			array_push($charok,$sor['KAR_KASZT']);
+			array_push($charok,$sor['K_LVL']);
+			array_push($charok,$sor['K_NEV']);
+			array_push($charok,$sor['K_APOINT']);
+		}
+		return $charok;
+		
+	}
+public function startEvent()
+	{
+		$charok=array();
+		$sql="SELECT `K_STR`, `K_AGI`, `K_REF`, 
+		`K_DEF`,K_LVL,`K_DEX`, `K_INT`, `K_LUC`, F_DMG,`K_CON`, 
+		`P_AC`,KAR_FAJ,KAR_KASZT FROM `karakterl`,fegyverek,pancel WHERE KAR_ID='".$_COOKIE['cid']."' and fegyverek.F_ID=K_WEAPONS and pancel.P_ID=K_ARMOR";
+		$res=mysql_query($sql);
+		echo $sql;
+		while ($sor=mysql_fetch_array($res)){	
+			array_push($charok,$sor['K_STR']);
+			array_push($charok,$sor['K_AGI']);
+			array_push($charok,$sor['K_REF']);
+			array_push($charok,$sor['K_DEF']);
+			array_push($charok,$sor['K_DEX']);
+			array_push($charok,$sor['K_INT']);
+			array_push($charok,$sor['K_LUC']);
+			array_push($charok,$sor['K_CON']);
+			array_push($charok,$sor['F_DMG']);
+			array_push($charok,$sor['P_AC']);
+			array_push($charok,$sor['KAR_FAJ']);
+			array_push($charok,$sor['KAR_KASZT']);
+			array_push($charok,$sor['K_LVL']);
+		}
+		return $charok;
+		
+	}
+public function getLoot($prefix,$db,$lvl)
+{
+	$sql="select ".$prefix."_ID,".$prefix."_NEV from ".$db." where ".$prefix."_SZINT<=".$lvl."";
+	$res=mysql_query($sql);
+	$szam=mysql_num_rows($res);
+	$num=rand(1,$szam);
+	$i=1;
+	while ($sor=mysql_fetch_array($res)){
+	if($i==$num)
+	{
+		$string=$prefix.",".$sor[$prefix.'_ID'].",".$sor[$prefix.'_NEV'];
+	}
+		$i++;
+	}
+	return $string;
+}
+public function getEnemy($lvl)
+{
+	$enemy=array();
+	$lovLVL=1;
+	$Hlevel=$lvl+2;
+	$sql="select * from beast where B_LVL between ".$lovLVL." and ".$Hlevel."";
+	$res=mysql_query($sql);
+	$num=mysql_num_rows($res);
+	$selected=rand(1,$num);
+	$i=1;
+	//echo $sql;
+		while ($sor=mysql_fetch_array($res))
+		{
+			if($i==$selected)
+			{
+				array_push($enemy,$sor['B_NEV']);
+				array_push($enemy,$sor['B_STR']);
+				array_push($enemy,$sor['B_AGI']);
+				array_push($enemy,$sor['B_DEX']);
+				array_push($enemy,$sor['B_DEF']);
+				array_push($enemy,$sor['B_REF']);
+				array_push($enemy,$sor['B_INT']);
+				array_push($enemy,$sor['B_LUC']);
+				array_push($enemy,$sor['B_CON']);
+			}
+		$i++;
+		}
+	return $enemy;
+}
+public function plUpdate($xp,$wol,$loot)
+{
+if($wol=='L')
+{
+	$sql='select K_XP from karakterl where KAR_ID='.$_COOKIE['cid'];
+	$eredmeny=mysql_query($sql);
+	while($sor=mysql_fetch_array($eredmeny))
+	{
+		$n_xp=$sor['K_XP'];
+	}
+	if(($n_xp-$xp)>0)
+	{
+		$sql='update karakterl set K_XP='.($n_xp-$xp).' where KAR_ID='.$_COOKIE['cid'];
+		mysql_query($sql);
+		
+	}
+	return "0";
+}
+if($wol=='W')
+{
+	for($i=0;$i<count($loot);$i++)
+		{
+			$loot_a=explode(',',$loot[$i]);
+			if($loot_a[0]=='M')
+			{
+				$sql='update karakterl set K_PENZ=K_PENZ+'.$loot_a[2].' where KAR_ID='.$_COOKIE['cid'];
+				mysql_query($sql);
+			}
+			else
+			{
+				$sql='insert into itemek (I_PID,I_FID,I_FAJ,I_ON) values ("'.$_COOKIE['cid'].'","'.$loot_a[1].'","'.$loot_a[0].'","0")';
+				//echo $sql;
+				mysql_query($sql);
+			}
+		}
+	$sql='update karakterl set K_XP=K_XP+'.$xp.' where KAR_ID='.$_COOKIE['cid'];
+	mysql_query($sql);
+	$sql='select K_LVL,K_XP from karakterl where KAR_ID='.$_COOKIE['cid'];
+	$eredmeny=mysql_query($sql);
+	while($sor=mysql_fetch_array($eredmeny))
+	{
+		$n_xp=$sor['K_XP'];
+		$lvl=$sor['K_LVL'];
+	}
+	
+	$sql='select xp from xp where lvl='.$lvl;
+	$eredmeny=mysql_query($sql);
+	while($sor=mysql_fetch_array($eredmeny))
+	{
+		$a_xp=$sor['xp'];
+	}
+	if($a_xp<$n_xp)
+	{
+		$sql='update karakterl set K_XP='.($n_xp-$a_xp).',K_LVL=K_LVL+1,K_APOINT=K_APOINT+5 where KAR_ID='.$_COOKIE['cid'];
+		mysql_query($sql);
+		return "1";
+	}
+	else
+	{
+		return "0";
+	}
+	 
+}
+}
+
+}
+
+?>

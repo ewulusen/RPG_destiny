@@ -1,4 +1,5 @@
 <?php
+@include_once("../model/Model.php");
 class Event_e {
 		public $model;
 public function __construct()  

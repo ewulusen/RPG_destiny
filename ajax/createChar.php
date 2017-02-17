@@ -16,5 +16,6 @@ $stat=explode(',',$_GET['values']);
 		unset($_SESSION['faj']);
 		setcookie('kaszt', '', time()-3600, '/');
 		setcookie('faj', '', time()-3600, '/');
+		setcookie('cid',$res);
 		echo $res;
 ?>

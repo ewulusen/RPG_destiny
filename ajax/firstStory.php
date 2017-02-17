@@ -54,7 +54,6 @@ for($i=0;$i<100;$i++)
 			}	
 		}
 		$dn[$ex][$ey]=8;
-			$ch=array();
 			$emy=array();
 			$tr=array();
 for($i=0;$i<100;$i++)
@@ -82,7 +81,7 @@ $ret=$GLOBALS['conn']->insert_id;
 	$beast=$ered->fetch_array(MYSQLI_BOTH);
 	$beast_id=$beast['B_ID'];
 	$exp=explode(',',$emy[$i]);
-	$sql1="INSERT INTO `enemy`(`E_ID`, `E_X`, `E_Y`,G_ID,EL) VALUES (".$beast_id.",".$exp[0].",".$exp[1].",".$ret.")";
+	$sql1="INSERT INTO `enemy`(`E_ID`, `E_X`, `E_Y`,G_ID,EL) VALUES (".$beast_id.",".$exp[0].",".$exp[1].",".$ret.",1)";
 	$GLOBALS['conn']->query($sql1);
 
 }

@@ -43,6 +43,30 @@ function ajaxAttack(i,j)
         xmlhttp.send();
 	document.getElementById("attackMenu").style.display="block";
 }
+
+function ajaxOut()
+{
+		$.ajax(
+		{
+			type:"GET",
+			url:'ajax/exitDungeon.php',
+			success:function(result)
+				{
+					$("#mainPage").html(result)
+				}
+				});
+				
+		//jobb menű vissza alakítása
+				var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('menuPage').innerHTML = this.responseText;
+            }
+        };
+		
+        xmlhttp.open("GET","view/menuPage.php", true);
+        xmlhttp.send();
+}
 function ajaxOpenChest(i,j)
 {
 		var xmlhttp = new XMLHttpRequest();
@@ -69,8 +93,8 @@ function ajaxCatacombs()
         };
         xmlhttp.open("GET", "view/catacombs.php", true);
         xmlhttp.send();
-		document.getElementById("attackMenu").style.display="none";
 		ajaxCatacombsMenu();
+		document.getElementById("attackMenu").style.display="none";
 } 
 function ajaxCatacombsMenu()
 {
@@ -205,7 +229,7 @@ function tovabb()
 	var faj=document.getElementById('faj').innerHTML;
 	var kaszt=document.getElementById('kaszt').innerHTML;
 	var nev=document.getElementById('nev').value;
-	var ac=Number(con)+Number(def)+Number(4);
+	var ac=4;
 	if(nev!="")
 	{
 		var id="";
@@ -215,11 +239,12 @@ function tovabb()
 			url:'ajax/createChar.php?values='+faj+','+kaszt+','+str+','+agi+','+def+','+dex+','+ref+','+inte+','+con+','+luck+','+kocka+','+nev,
 			success:function(result)
 				{
-					console.log(result+"result");
+				console.log(result+"result");
 				id=result;
+				document.cookie="cid="+id;
 				}
 				});
-		document.cookie="cid="+id;
+		kocka.innerHTML="";
 		document.cookie="lvl=1";
 		selectChar(id,nev,kaszt,'100','1',str,'3',ac,con,def,inte,faj,agi)
 $.ajax(
@@ -985,10 +1010,12 @@ function badLuck(ki,mi)
 		}
 		
 		createrowtoevent("nincs szerencséd!"+szoveg);
+		enemyhit();
 		}
 		else
 		{
-		createrowtoevent("A ahogy elesnél kitámasztasz a fegyvereddel és megúsztad hogy valami szőrnyű történjen.");	
+		createrowtoevent("A ahogy elesnél kitámasztasz a fegyvereddel és megúsztad hogy valami szőrnyű történjen.");
+		enemyhit();		
 		}
 		}
 	}

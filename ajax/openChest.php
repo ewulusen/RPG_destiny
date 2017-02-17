@@ -87,7 +87,7 @@ for($i=0;$i<count($loot);$i++)
 			}
 			else
 			{
-				$sql='insert into itemek (I_PID,I_FID,I_FAJ,I_ON) values ("'.$_COOKIE['cid'].'","'.$loot_a[1].'","'.$loot_a[0].'","0")';
+				$sql='insert into itemek_dungeon (I_PID,I_FID,I_FAJ,I_ON) values ("'.$_COOKIE['cid'].'","'.$loot_a[1].'","'.$loot_a[0].'","0")';
 				//echo $sql;
 				$GLOBALS['conn']->query($sql);
 			}

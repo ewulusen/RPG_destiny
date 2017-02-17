@@ -106,7 +106,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 				{
 					if($dn[$i][$j]!=0 )
 					{
-						if($dn[$i][$j]==1)
+						if($dn[$i][$j]==1)//padló
 						{
 							if($dn[($i+1)][$j]==7)
 							{
@@ -129,7 +129,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 							echo'<td class="dungeonAlap" id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 						}
-						elseif($dn[$i][$j]==6)
+						elseif($dn[$i][$j]==6)//csapda
 						{
 							if($dn[($i+1)][$j]==7)
 							{
@@ -152,7 +152,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 							echo'<td class="dungeonAlap" id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 						}
-						elseif($dn[$i][$j]==2)
+						elseif($dn[$i][$j]==2)//ajtó be
 						{
 							if($dn[($i+1)][$j]==7)
 							{
@@ -175,7 +175,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 							echo'<td class="dungeonAlap" id="'.$dn[$i][$j].'"><img src="img\elements\in.png" width=75px height=75px></td>';
 							}
 						}
-						elseif($dn[$i][$j]==3)
+						elseif($dn[$i][$j]==3)//chest
 						{
 							$ok=$page->chestOpen($i,$j);
 							if ($ok==0)
@@ -206,7 +206,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 								echo'<td class="openChest" onclick=ajaxStep(1,"p")id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 						}
-						elseif($dn[$i][$j]==4)
+						elseif($dn[$i][$j]==4)//enemy
 						{
 							$ok=$page->enemyLive($i,$j);
 							if ($ok==0)
@@ -237,7 +237,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 								echo'<td class="deathEnemy" onclick=ajaxStep(100,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 						}
-						elseif($dn[$i][$j]==5)
+						elseif($dn[$i][$j]==5)//folyosó
 						{
 							if($dn[($i+1)][$j]==7)
 							{
@@ -259,18 +259,35 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 							{
 							echo'<td class="dungeonFolyoso" id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
-							}
-						elseif($dn[$i][$j]==7)
+						}
+						elseif($dn[$i][$j]==7)//player
 						{
 						
 						echo'<td class="dungeonHatter" id="'.$dn[$i][$j].'"><img src="img/player_pic/'.$_COOKIE['faj'].''.$_COOKIE['kaszt'].'g.gif" width=75px height=75px></td>';
 						
 						}
-						elseif($dn[$i][$j]==8)
+						elseif($dn[$i][$j]==8)//kijárat
 						{
-						
-						echo'<td class="dungeonOut" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
-						
+						if($dn[($i+1)][$j]==7)
+							{
+							echo'<td class="dungeonLephet" onclick="ajaxOut()" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
+							}
+							elseif($dn[($i-1)][$j]==7)
+							{
+							echo'<td class="dungeonLephet" onclick="ajaxOut()" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
+							}
+							elseif($dn[$i][($j-1)]==7)
+							{
+							echo'<td class="dungeonLephet" onclick="ajaxOut()" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
+							}
+							elseif($dn[$i][($j+1)]==7)
+							{
+							echo'<td class="dungeonLephet" onclick="ajaxOut()" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
+							}
+							else
+							{
+							echo'<td class="dungeonOut" id="'.$dn[$i][$j].'"><img src="img/elements/out.png" width=75px height=75px></td>';
+							}
 						}
 					}
 						else

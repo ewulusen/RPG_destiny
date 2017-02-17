@@ -14,7 +14,7 @@ delete_cookie("kaszt");
 delete_cookie("faj");
 delete_cookie("penz");
 </script>';
-unset($_COOKIE['kocka']);
+unset($_SESSION['kocka']);
 unset($_COOKIE['char']);
 unset($_COOKIE['cid']);
 $_COOKIE['end']=1;

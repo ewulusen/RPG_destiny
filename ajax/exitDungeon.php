@@ -9,7 +9,7 @@ $sql="delete from enemy where G_ID='".$_SESSION['dname']."' ";
 $GLOBALS['conn']->query($sql) or die("hiba a ellenfelek törlése közben");
 $sql="delete from trap where G_ID='".$_SESSION['dname']."' "; 
 $GLOBALS['conn']->query($sql) or die("hiba a csapdák törlése közben");
-$sql="select * into itemek from itemek_dungeon where  I_PID='".$_COOKIE['cid']."' "; 
+$sql="INSERT INTO itemek (`I_PID`, `I_FID`, `I_FAJ`, `I_ON`) SELECT `I_PID`, `I_FID`, `I_FAJ`, `I_ON` FROM itemek_dungeon where I_PID='".$_COOKIE['cid']."' "; 
 $GLOBALS['conn']->query($sql) or die("hiba az itemek áthelyezése közben ");
 $sql="delete from itemek_dungeon where  I_PID='".$_COOKIE['cid']." '"; 
 $GLOBALS['conn']->query($sql) or die("hiba az itemek törlése közben");

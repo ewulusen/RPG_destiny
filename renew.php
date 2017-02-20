@@ -7,5 +7,6 @@ $GLOBALS['conn']->query("TRUNCATE enemy");
 $GLOBALS['conn']->query("TRUNCATE chest");
 $GLOBALS['conn']->query("TRUNCATE trap");
 $GLOBALS['conn']->query("TRUNCATE game");
+$GLOBALS['conn']->query("TRUNCATE itemek_dungeon");
 header("location:index.php");
 ?>

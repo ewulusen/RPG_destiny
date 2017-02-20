@@ -20,5 +20,5 @@
                 <a href="#" class="list-group-item border2" onclick="ajaxload('main')">Város</a>
                 <a href="#" class="list-group-item border2" onclick="ajaxload('main')">Hegyek</a>
 				</div> 
-	<a href="#" class="list-group-item border2" >Elfutok</a>			
+	<a href="#" class="list-group-item border2" onclick="runAway()">Elfutok</a>			
  </div>

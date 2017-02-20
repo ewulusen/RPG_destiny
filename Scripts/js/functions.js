@@ -43,6 +43,29 @@ function ajaxAttack(i,j)
         xmlhttp.send();
 	document.getElementById("attackMenu").style.display="block";
 }
+function runAway()
+{
+	$.ajax(
+		{
+			type:"GET",
+			url:'ajax/runAway.php',
+			success:function(result)
+				{
+					$("#mainPage").html(result)
+				}
+				});
+	
+		//jobb menű vissza alakítása
+				var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('menuPage').innerHTML = this.responseText;
+            }
+        };
+		
+        xmlhttp.open("GET","view/menuPage.php", true);
+        xmlhttp.send();
+}
 
 function ajaxOut()
 {

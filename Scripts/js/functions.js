@@ -42,6 +42,29 @@ function ajaxAttack(i,j)
         xmlhttp.open("GET","view/attack.php?i="+i+"&j="+j+"", true);
         xmlhttp.send();
 	document.getElementById("attackMenu").style.display="block";
+	$.ajax(
+		{
+			type:"GET",
+			url:'ajax/getSpells.php',
+			success:function(result)
+				{
+					$("#spells").html(result)
+				}
+				});
+}
+function spell(id)
+{
+	var emac=document.getElementById("emac").innerHTML;
+	$.ajax(
+		{
+			type:"GET",
+			data:'emac='+emac+'&id='+id,
+			url:'ajax/castSpell.php',
+			success:function(result)
+				{
+					console.log(result);
+				}
+				});
 }
 function runAway()
 {

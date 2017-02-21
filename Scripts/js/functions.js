@@ -54,15 +54,73 @@ function ajaxAttack(i,j)
 }
 function spell(id)
 {
+	//$fajta.",".$mit.",".$mana.",".$dmg.",".$kocka;//normál dobás
 	var emac=document.getElementById("emac").innerHTML;
+	var mac=document.getElementById("mac").innerHTML;
+	var inte=document.getElementById("int").innerHTML;
+	var maxhp=document.getElementById("maxhp").innerHTML;
+	var hp=document.getElementById("charhp").innerHTML;
+	var charmana=document.getElementById("charmana").innerHTML;
+	
 	$.ajax(
 		{
 			type:"GET",
-			data:'emac='+emac+'&id='+id,
+			data:'spellID='+id,
 			url:'ajax/castSpell.php',
 			success:function(result)
 				{
-					console.log(result);
+					var exp=result.split(",");
+					if(exp[0]=='2')
+					{
+						if(exp[1]=='H')
+						{
+							if(maxhp==hp)
+							{
+								if(Number(charmana)-Number(exp[3])>0)
+								{
+								charmana=Number(charmana)-Number(exp[3]);
+								document.getElementById("charmana").innerHTML=charmana;
+								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
+								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
+								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
+								createrowtoeventheal("gyógyúltál 0-át");
+								enemyhit();
+								}
+								else
+								{
+									createrowtoevent("nincs elegendő manád a  varázslatra");
+								}
+							}
+							if(maxhp>hp)
+							{
+								if(Number(charmana)-Number(exp[3])>0)
+								{
+								charmana=Number(charmana)-Number(exp[3]);
+								document.getElementById("charmana").innerHTML=charmana;
+								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
+								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
+								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
+								
+								hp=Number(hp)+Number(exp[4]);
+								if(maxhp<hp)
+								{
+									hp=maxhp;
+								}
+								createrowtoeventheal("gyógyúltál "+exp[4]);
+								document.getElementById("charhp").innerHTML=hp;
+								document.getElementById("hp").innerHTML=maxhp+"/"+hp;
+								document.getElementById("hpbar").setAttribute('aria-valuenow',hp);
+								document.getElementById("hpbar").style.width=((Number(hp)*Number(100))/(maxhp))+"%";
+								
+								enemyhit();
+								}
+								else
+								{
+									createrowtoevent("nincs elegendő manád a  varázslatra");
+								}
+							}
+						}
+					}
 				}
 				});
 }
@@ -140,8 +198,11 @@ function ajaxCatacombs()
         xmlhttp.open("GET", "view/catacombs.php", true);
         xmlhttp.send();
 		ajaxCatacombsMenu();
-		document.getElementById("attackMenu").style.display="none";
-} 
+		if(document.getElementById("attackMenu"))
+		{
+			document.getElementById("attackMenu").style.display="none";
+		} 
+}
 function ajaxCatacombsMenu()
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -560,11 +621,20 @@ document.cookie="xp="+document.getElementById('xp').innerHTML;
 //vége a játéknak player vesztett
 function endGamePL()
 {
-	document.cookie="end=1";
-	//console.log(document.getElementById('xp').innerHTML+'player lose');
-	document.cookie="xp="+document.getElementById('xp').innerHTML;
-	ajaxload('playerLose','mainPage');
-	}
+document.cookie="xp="+document.getElementById('xp').innerHTML;
+ var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("mainPage").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "view/playerLose.php", true);
+        xmlhttp.send();
+
+		setTimeout(function() {
+			 runAway();
+			}, delay2);
+}
 // urlből változók kiolvasása
 function getParameterByName(name, url) {
     if (!url) {
@@ -716,6 +786,72 @@ function createrowtoevent(szoveg)
 	}
 		eventText++;
 	}
+//új sor hozzá adása az event mappához heal
+function createrowtoeventheal(szoveg)
+	{
+		//console.log(szoveg);
+	var tbl = document.getElementById('event');	
+    var tbdy = document.createElement('tbody');
+	var tr = document.createElement('tr');
+	tr.id="event"+eventText;
+	var td = document.createElement('td');
+	td.style.color="blue";
+	td.appendChild(document.createTextNode(szoveg));
+			tr.appendChild(td);		  
+		 tbdy.appendChild(tr);	
+    tbl.appendChild(tbdy);
+	if((eventText / 18 )>1)
+	{
+		document.getElementById('event').deleteRow(0);
+		
+	}
+		eventText++;
+	}
+//új sor hozzá adása az event mappához támadás
+function createrowtoeventsebzes(szoveg)
+	{
+		//console.log(szoveg);
+	var tbl = document.getElementById('event');	
+    var tbdy = document.createElement('tbody');
+	var tr = document.createElement('tr');
+	tr.id="event"+eventText;
+	var td = document.createElement('td');
+	td.style.color="green";
+	td.appendChild(document.createTextNode(szoveg));
+			tr.appendChild(td);		  
+		 tbdy.appendChild(tr);	
+    tbl.appendChild(tbdy);
+	if((eventText / 18 )>1)
+	{
+		document.getElementById('event').deleteRow(0);
+		
+	}
+		eventText++;
+	}
+//új sor hozzá adása az event mappához sebződés
+function createrowtoeventsebzodes(szoveg)
+	{
+		//console.log(szoveg);
+	var tbl = document.getElementById('event');	
+    var tbdy = document.createElement('tbody');
+	var tr = document.createElement('tr');
+	tr.id="event"+eventText;
+	var td = document.createElement('td');
+	td.style.color="red";
+	td.appendChild(document.createTextNode(szoveg));
+			tr.appendChild(td);		  
+		 tbdy.appendChild(tr);	
+    tbl.appendChild(tbdy);
+	if((eventText / 18 )>1)
+	{
+		document.getElementById('event').deleteRow(0);
+		
+	}
+		eventText++;
+	}	
+	
+	
+	
 //ellenfél mozgása a mappon	
 function emoveTo(x,y)
 {
@@ -839,7 +975,7 @@ function enemyhit()
 		{
 			var sebzes=Math.floor((Math.random()*edmg)+1);
 			
-			createrowtoevent("Sikerült neki, sebzett: "+sebzes);
+			createrowtoeventsebzodes("Sikerült neki, sebzett: "+sebzes);
 			
 			hp=Number(hp)-Number(sebzes);
 			document.getElementById('charhp').innerHTML=hp;
@@ -903,7 +1039,7 @@ function playerhit()
 		{
 			var sebzes=Math.floor((Math.random()*dmg)+1);
 			
-			createrowtoevent("Sikerült, sebzésed: "+sebzes);
+			createrowtoeventsebzes("Sikerült, sebzésed: "+sebzes);
 			
 			
 			ehp=Number(ehp)-Number(sebzes);
@@ -964,19 +1100,20 @@ function goodLuck(ki)
 		var sebzes=Math.floor((Math.random()*dmg)+1);
 				sebzes=Number(sebzes)*Number(2);
 			
-			createrowtoevent("<b>A szerencse kegyeltje, vagy sebzésed: "+sebzes+"</b>");
+			createrowtoeventsebzes("<b>A szerencse kegyeltje, vagy sebzésed: "+sebzes+"</b>");
 			
 			ehp=Number(ehp)-Number(sebzes);
 			document.getElementById('ehp').innerHTML=ehp;
 			var procent=(Number(ehp)*Number(100))/Number(emaxhp);
 			ehpbar.style.width=procent+"%";
 			document.getElementById('enemyhps').innerHTML=emaxhp+"/"+ehp;
+			enemyhit();
 	if (ki==="E")
 	{
 			var sebzes=Math.floor((Math.random()*edmg)+1);
 			sebzes=Number(sebzes)*Number(2);
 			
-			createrowtoevent("<b>Az ellenfeled a szerencse kegyeltje, sebzett: "+sebzes+"</b>");
+			createrowtoeventsebzodes("<b>Az ellenfeled a szerencse kegyeltje, sebzett: "+sebzes+"</b>");
 			
 			hp=Number(hp)-Number(sebzes);
 			document.getElementById('hp').innerHTML=hp;
@@ -1015,7 +1152,7 @@ function badLuck(ki,mi)
 		{
 		
 		var sebzes=Math.floor((Math.random()*edmg)+1);
-		createrowtoevent("Balsiker! az ellenfeled megsebesítette magát "+sebzes+" dmg-vel");
+		createrowtoeventsebzes("Balsiker! az ellenfeled megsebesítette magát "+sebzes+" dmg-vel");
 		ehp=Number(ehp)-Number(sebzes);
 		document.getElementById('enemyhp').innerHTML=ehp;
 		var procent=(Number(ehp)*Number(100))/Number(emaxhp);
@@ -1055,7 +1192,7 @@ function badLuck(ki,mi)
 			
 		}
 		
-		createrowtoevent("nincs szerencséd!"+szoveg);
+		createrowtoeventsebzodes("nincs szerencséd!"+szoveg);
 		enemyhit();
 		}
 		else

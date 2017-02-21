@@ -97,5 +97,5 @@ for($i=0;$i<count($loot);$i++)
 	$sql="update chest set EL=0 where C_X=".$_GET['i']." and C_Y=".$_GET['j']." and G_ID=".$_SESSION['dname']."";
 	//echo $sql;
 	$GLOBALS['conn']->query($sql);
-	 
+	 echo '<span class="storyspan border2"><button onclick="ajaxCatacombs()">Tovább</button></span></div>';
 }

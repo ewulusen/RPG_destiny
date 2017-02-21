@@ -96,7 +96,7 @@ if(isset($_COOKIE['cid']))
 	   <th>Név</th>
 	   <th>Ár db/Tf</th>
 	   <th>módosító</th>
-	   <th>DMG/AC</th></tr><tr>';
+	   </tr><tr>';
 	    for($i=0;$i<count($item);$i++)
 	   {
 		  $item_a=explode('&',$item[$i]);
@@ -107,10 +107,10 @@ if(isset($_COOKIE['cid']))
 				<td>'.$item_a[3].'.-Tf</td>
 				<td>'.$item_a[4].''.$item_a[5].'</td>';
 				
-				echo'<td>-</td>';
+				
 				
 				$hol="kalandozo";
-				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[7]."','".$item_a[3]."')>Elad</td>";
+				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[6]."','".$item_a[3]."')>Elad</td>";
 				echo '</tr><tr>';
 	   }
 	   }
@@ -125,7 +125,7 @@ if(isset($_COOKIE['cid']))
 	   <th>Név</th>
 	   <th>Ár db/Tf</th>
 	   <th>módosító</th>
-	   <th>DMG/AC</th></tr><tr>';
+	  </tr><tr>';
 	    for($i=0;$i<count($item);$i++)
 	   {
 		  $item_a=explode('&',$item[$i]);
@@ -136,10 +136,10 @@ if(isset($_COOKIE['cid']))
 				<td>'.$item_a[3].'.-Tf</td>
 				<td>'.$item_a[4].''.$item_a[5].'</td>';
 				
-				echo'<td>-</td>';
+				
 				
 				$hol="kalandozo";
-				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[7]."','".$item_a[3]."')>Elad</td>";
+				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[6]."','".$item_a[3]."')>Elad</td>";
 				echo '</tr><tr>';
 	   }
 	   }
@@ -154,7 +154,7 @@ if(isset($_COOKIE['cid']))
 	   <th>Név</th>
 	   <th>Ár db/Tf</th>
 	   <th>módosító</th>
-	   <th>DMG/AC</th></tr><tr>';
+	   </tr><tr>';
 	    for($i=0;$i<count($item);$i++)
 	   {
 		  $item_a=explode('&',$item[$i]);
@@ -165,10 +165,10 @@ if(isset($_COOKIE['cid']))
 				<td>'.$item_a[3].'.-Tf</td>
 				<td>'.$item_a[4].''.$item_a[5].'</td>';
 				
-				echo'<td>-</td>';
+				
 				
 				$hol="kalandozo";
-				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[7]."','".$item_a[3]."')>Elad</td>";
+				echo"<td><button class='btn btn-danger' onclick=elad('".$hol."','".$item_a[6]."','".$item_a[3]."')>Elad</td>";
 				echo '</tr><tr>';
 	   }
 	   }

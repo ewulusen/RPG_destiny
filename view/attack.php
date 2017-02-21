@@ -9,10 +9,12 @@ $ehp=$enemy[4]+$enemy[8]+$enemy[1];
 $hp=$player[3]+$player[7]+$player[0];
 $xp=$enemy[9];
 $emac=$enemy[4]+$enemy[6];
+$mac=$player[5]+$player[3];
+$int=$player[5];
 
 //print_r($enemy);
 echo'<div class=container><div class="col-sm-2">Események<br>
-	<table class="charChuser" id="event"></table>
+	<table class="charChuser table-bordered" id="event"></table>
 </div><div class="col-sm-1"></div><div class="col-sm-8">
 <table class="charChuser">
 	<tr>
@@ -52,5 +54,7 @@ echo'<div class=container><div class="col-sm-2">Események<br>
 				<oreo style="display:none;"id=maxhp>'.$hp.'</oreo>
 				<oreo style="display:none;"id=xp>'.$xp.'</oreo>
 				<oreo style="display:none;"id=emac>'.$emac.'</oreo>
+				<oreo style="display:none;"id=mac>'.$mac.'</oreo>
+				<oreo style="display:none;"id=int>'.$int.'</oreo>
 	</div>';
 ?>

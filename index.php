@@ -29,7 +29,8 @@ else
 			DMG:<img src="img/elements/dmg.png"><span id="chardmg">--</span><br>
 			AC:<img src="img/elements/ac.png"><span id="charAC">--</span></div>
 			<div class="col-sm-2">Pénz:<img src="img/elements/money.png"><span id="charmoney">--</span>.-Trefu<br>
-			Mozgás:<img src="img/elements/move.png"><span id="charmove">--</span>
+			Mozgás:<img src="img/elements/move.png"><span id="charmove">--</span><br>
+			<oreo id="message"></oreo>
 			</div>
 			<div class="col-sm-3"><img src="img/elements/mn.png">
 				<span id="mana">10/10</span><div class="progress">

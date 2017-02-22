@@ -11,6 +11,7 @@ $xp=$enemy[9];
 $emac=$enemy[4]+$enemy[6];
 $mac=$player[5]+$player[3];
 $int=$player[5];
+$agi=$player[1];
 
 //print_r($enemy);
 echo'<div class=container><div class="col-sm-2">Események<br>
@@ -56,5 +57,6 @@ echo'<div class=container><div class="col-sm-2">Események<br>
 				<oreo style="display:none;"id=emac>'.$emac.'</oreo>
 				<oreo style="display:none;"id=mac>'.$mac.'</oreo>
 				<oreo style="display:none;"id=int>'.$int.'</oreo>
+				<oreo style="display:none;"id=agi>'.$agi.'</oreo>
 	</div>';
 ?>

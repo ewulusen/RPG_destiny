@@ -20,6 +20,11 @@ var page;
 ///////////////////////////////////////////////////
 function ajaxStep(move,jel)
 {
+	var step=document.getElementById('charmove').innerHTML;
+	if((step-1)>-1)
+	{
+	step--;
+	document.getElementById('charmove').innerHTML=step;
 		var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -28,7 +33,11 @@ function ajaxStep(move,jel)
         };
         xmlhttp.open("GET", "view/catacombs.php?move="+move+"&jel="+jel+"", true);
         xmlhttp.send();
-	
+	}
+	else
+	{
+		document.getElementById('message').innerHTML="nincs elegendő mozgási erőd kattinst a kör vége gombra";
+	}
 }
 function ajaxAttack(i,j)
 {
@@ -70,12 +79,14 @@ function spell(id)
 			success:function(result)
 				{
 					var exp=result.split(",");
+					//normál dobás
 					if(exp[0]=='2')
 					{
 						if(exp[1]=='H')
 						{
 							if(maxhp==hp)
 							{
+								
 								if(Number(charmana)-Number(exp[3])>0)
 								{
 								charmana=Number(charmana)-Number(exp[3]);
@@ -100,13 +111,13 @@ function spell(id)
 								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
 								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
 								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
-								
-								hp=Number(hp)+Number(exp[4]);
+								var heal=Math.floor((Math.random()*exp[4]));
+								hp=Number(hp)+Number(heal);
 								if(maxhp<hp)
 								{
 									hp=maxhp;
 								}
-								createrowtoeventheal("gyógyúltál "+exp[4]);
+								createrowtoeventheal("gyógyúltál "+heal);
 								document.getElementById("charhp").innerHTML=hp;
 								document.getElementById("hp").innerHTML=maxhp+"/"+hp;
 								document.getElementById("hpbar").setAttribute('aria-valuenow',hp);
@@ -119,6 +130,92 @@ function spell(id)
 									createrowtoevent("nincs elegendő manád a  varázslatra");
 								}
 							}
+						
+						}
+					}
+					//balsiker
+					if(exp[0]=='4')
+					{
+						if(exp[1]=='H')
+						{
+							
+								if(Number(charmana)-Number(exp[3])>0)
+								{
+								charmana=Number(charmana)-Number(exp[3]);
+								document.getElementById("charmana").innerHTML=charmana;
+								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
+								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
+								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
+								var heal=Math.floor((Math.random()*exp[4]));
+								hp=Number(hp)-Number(heal);
+								createrowtoeventheal("Balsiker! ahogy mormolod a varázslatod megcsuklik a hangod! sebződtél "+heal);
+								document.getElementById("charhp").innerHTML=hp;
+								document.getElementById("hp").innerHTML=maxhp+"/"+hp;
+								document.getElementById("hpbar").setAttribute('aria-valuenow',hp);
+								document.getElementById("hpbar").style.width=((Number(hp)*Number(100))/(maxhp))+"%";
+								
+								enemyhit();
+								}
+								else
+								{
+									createrowtoevent("nincs elegendő manád a  varázslatra");
+								}
+							
+						
+						}
+					}
+					//normál dobás
+					if(exp[0]=='5')
+					{
+						if(exp[1]=='H')
+						{
+							if(maxhp==hp)
+							{
+								
+								if(Number(charmana)-Number(exp[3])>0)
+								{
+								charmana=Number(charmana)-Number(exp[3]);
+								document.getElementById("charmana").innerHTML=charmana;
+								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
+								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
+								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
+								createrowtoeventheal("gyógyúltál 0-át");
+								enemyhit();
+								}
+								else
+								{
+									createrowtoevent("nincs elegendő manád a  varázslatra");
+								}
+							}
+							if(maxhp>hp)
+							{
+								if(Number(charmana)-Number(exp[3])>0)
+								{
+								charmana=Number(charmana)-Number(exp[3]);
+								document.getElementById("charmana").innerHTML=charmana;
+								document.getElementById("mana").innerHTML=Number(inte)*Number(10)+"/"+charmana;
+								document.getElementById("manabar").setAttribute('aria-valuenow',charmana);
+								document.getElementById("manabar").style.width=((Number(charmana)*Number(100))/(Number(inte)*Number(10)))+"%";
+								var heal=Math.floor((Math.random()*exp[4])*2);
+								hp=Number(hp)+Number(heal);
+								if(maxhp<hp)
+								{
+									hp=maxhp;
+								}
+								createrowtoeventheal("szerencse istene rád mosolygot! gyógyúltál "+heal);
+								document.getElementById("charhp").innerHTML=hp;
+								document.getElementById("hp").innerHTML=maxhp+"/"+hp;
+								document.getElementById("hpbar").setAttribute('aria-valuenow',hp);
+								document.getElementById("hpbar").style.width=((Number(hp)*Number(100))/(maxhp))+"%";
+								
+								enemyhit();
+								}
+								else
+								{
+									createrowtoevent("nincs elegendő manád a  varázslatra");
+								}
+							}
+						
 						}
 					}
 				}
@@ -182,9 +279,6 @@ function ajaxOpenChest(i,j)
 		
         xmlhttp.open("GET","ajax/openChest.php?i="+i+"&j="+j+"", true);
         xmlhttp.send();
-		setTimeout(function() {
-			 ajaxCatacombs();
-			}, delay2);
 	
 }
 function ajaxCatacombs()
@@ -614,9 +708,7 @@ document.cookie="xp="+document.getElementById('xp').innerHTML;
         xmlhttp.open("GET", "view/playerWin.php", true);
         xmlhttp.send();
 
-		setTimeout(function() {
-			 ajaxCatacombs();
-			}, delay2);
+		
 }
 //vége a játéknak player vesztett
 function endGamePL()
@@ -650,54 +742,15 @@ function getParameterByName(name, url) {
 //vége a körnek gép lép és újratöltődi ka mozgás pont
 function endTurn()
 {
-	if(indike=='0')
-	{
-	for(var i=0;i<8;i++){
-	if((Number(enemy)-Number(8))== player)
-				{
-					attack();
-					break;
-				}
-	
-	else if( (Number(enemy)+Number(8))== player)
-				{
-					attack();
-						break;					}
-	else if( (Number(enemy)+Number(1))== player)
-				{
-					attack();
-					break;
-				}
-	else if( (Number(enemy)-Number(1))== player)
-				{
-					attack();
-					break;
-				}
-		else 
-		{
-			var merre=Math.floor((Math.random()*3));
-			if(merre==0)
-			{
-				emoveTo("-","8");
-			}
-			if(merre==1)
-			{
-				emoveTo("+","8");
-			}
-			if(merre==2)
-			{	
-				emoveTo("-","1");
-			}
-			if(merre==3)
-			{
-				emoveTo("+","1");
-			}
-		}
-	}
-	}
-drawMap();	
-	document.getElementById('move').innerHTML=getParameterByName('agi');
-	alap_move=alap_movek;
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("dungeon").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "view/enemyMove.php", true);
+        xmlhttp.send();
+	document.getElementById('charmove').innerHTML=document.getElementById('agi').innerHTML;
 }
 //console.log(gamemap);
 //billentyű lenyommással vezért mozgatás
@@ -795,8 +848,11 @@ function createrowtoeventheal(szoveg)
 	var tr = document.createElement('tr');
 	tr.id="event"+eventText;
 	var td = document.createElement('td');
+	var image = document.createElement('img');
+	image.src="img/elements/heal.png";
 	td.style.color="blue";
-	td.appendChild(document.createTextNode(szoveg));
+	td.appendChild(document.createTextNode(szoveg+" "));
+	td.appendChild(image);
 			tr.appendChild(td);		  
 		 tbdy.appendChild(tr);	
     tbl.appendChild(tbdy);

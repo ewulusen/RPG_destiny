@@ -16,7 +16,7 @@ var delay=2000; //2 second
 var delay2=8000; //8 second
 var delay3=15000; //15 second
 var page;
-
+var enemyNumber;
 ///////////////////////////////////////////////////
 function ajaxStep(move,jel)
 {
@@ -244,7 +244,18 @@ function runAway()
         xmlhttp.open("GET","view/menuPage.php", true);
         xmlhttp.send();
 }
-
+function editChar(id)
+{
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('menuPage').innerHTML = this.responseText;
+            }
+        };
+		
+        xmlhttp.open("GET","view/editChar.php?id="+id, true);
+        xmlhttp.send();
+}
 function ajaxOut()
 {
 		$.ajax(
@@ -295,6 +306,7 @@ function ajaxCatacombs()
 		if(document.getElementById("attackMenu"))
 		{
 			document.getElementById("attackMenu").style.display="none";
+			document.getElementById("message").innerHTML="";
 		} 
 }
 function ajaxCatacombsMenu()
@@ -489,53 +501,6 @@ function updateChar()
 
 }	
 
-//Erdő gamefield létrehozása
-function gamefield()
-{
-	if(document.getElementById('gamefield'))
-	{
-	alap_movek=getParameterByName('agi');
-	alap_move=alap_movek;
-	//console.log(alap_move);
-	var z=1;
-	var epos=Math.floor((Math.random()*61)+2);
-	var kpos=Math.floor((Math.random()*62)+1);
-	////console.log(epos+" "+kpos);
-	var tbl = document.getElementById('gamefield');	
-    var tbdy = document.createElement('tbody');
-    for (var i = 0; i < 8; i++) {
-        var tr = document.createElement('tr');
-        for (var j = 0; j < 8; j++) {
-                var td = document.createElement('td');
-				td.id=i+","+j;
-				if(z==1)
-				{
-				var imgsrc=document.createElement('img');
-					imgsrc.src="player_pic/"+faj+kaszt+"g.gif";
-                td.appendChild(imgsrc);
-				gamemap.push(z-1+',p');
-				}
-				
-				else if(z==epos)
-				{
-				gamemap.push(z-1+',e');}
-				else if(z==kpos)
-				{
-				gamemap.push(z-1+',c');
-				} 
-				else {
-				gamemap.push(z-1);}
-				tr.appendChild(td);
-			z++;			
-            }
-		 tbdy.appendChild(tr);	
-        }
-       
-    
-    tbl.appendChild(tbdy);
-perception(gamemap);
-}
-}
 
 /**észlelés, átvizsgálja a játékteret
 és ha valamilyen lény/tárgy közelébe vagyunk, jelez*/
@@ -750,7 +715,30 @@ function endTurn()
         };
         xmlhttp.open("GET", "view/enemyMove.php", true);
         xmlhttp.send();
-	document.getElementById('charmove').innerHTML=document.getElementById('agi').innerHTML;
+		$.ajax(
+		{
+			type:"GET",
+			url:'ajax/enemyMove.php',
+			async: true,
+			success:function(result)
+				{
+				
+				}
+		});
+		setTimeout(function() {
+		ajaxCatacombs();
+		$.ajax(
+		{
+			type:"GET",
+			url:'ajax/getPlayer.php',
+			async: true,
+			success:function(result)
+				{
+				document.getElementById('charmove').innerHTML=result;
+				}
+		});
+		}, delay);
+	
 }
 //console.log(gamemap);
 //billentyű lenyommással vezért mozgatás
@@ -905,96 +893,6 @@ function createrowtoeventsebzodes(szoveg)
 	}
 		eventText++;
 	}	
-	
-	
-	
-//ellenfél mozgása a mappon	
-function emoveTo(x,y)
-{
-	if(x=="-")
-	{
-		if((Number(enemy)-Number(y))>0)
-		{
-		enemy=Number(enemy)-Number(y);
-		}
-	}
-	if(x=="+")
-	{
-		if((Number(enemy)+Number(y))<64)
-		{
-		enemy=Number(enemy)+Number(y);
-	}
-	}
-	
-}
-//támadás
-function attack()
-{
-	/*console.log(window.location.href);
-	window.open("view/battlefield.php","_blank");
-	*/
-	var btf=document.getElementById('btf');
-	var btf2=document.getElementById('btf2');
-	//console.log()
-	btf.style.display='inline';
-	btf2.style.display='inline';
-	document.getElementById('button').style.display='none';
-	document.getElementById('button2').style.display='none';
-	var tabla = document.getElementById('gamefield');
-	tabla.style.display="none";
-	str=getParameterByName('str');
-	agi=getParameterByName('agi');
-	con=getParameterByName('con');
-	luck=getParameterByName('luc');
-	def=getParameterByName('def');
-	dex=getParameterByName('dex');
-	inte=getParameterByName('int');
-	dmg=getParameterByName('dmg');
-	armor=getParameterByName('ac');
-	ref=getParameterByName('ref');
-	ini=ref+agi;
-	estr=getParameterByName('estr');
-	eagi=getParameterByName('eagi');
-	econ=getParameterByName('econ');
-	eluck=getParameterByName('eluck');
-	edef=getParameterByName('def');
-	edex=getParameterByName('dex');
-	einte=getParameterByName('inte');
-	edmg=getParameterByName('estr');
-	earmor=getParameterByName('def');
-	eref=getParameterByName('eref');
-	eini=eref+eagi;
-	
-	hp=Number(con)+Number(def)+Number(str);
-	ac=Number(con)+Number(def)+Number(armor);
-	mac=Number(inte)+Number(def);
-	dmg=Number(dmg)+Number(str);
-	ehp=Number(econ)+Number(edef)+Number(estr)
-	eac=Number(econ)+Number(edef)+Number(earmor);
-	emac=Number(einte)+Number(edef);
-	edmg=Number(edmg)+Number(estr);
-	xp=Number(ehp)*10;
-	document.getElementById('hp').innerHTML=Number(con)+Number(def)+Number(str);
-	document.getElementById('ac').innerHTML=Number(con)+Number(def)+Number(armor);
-	document.getElementById('mac').innerHTML=Number(inte)+Number(def);
-	document.getElementById('dmg').innerHTML=Number(dmg)+Number(str);
-	document.getElementById('ini').innerHTML=Number(ref)+Number(agi);
-	document.getElementById('ehp').innerHTML=Number(econ)+Number(edef)+Number(estr);
-	document.getElementById('eac').innerHTML=Number(econ)+Number(edef)+Number(earmor);
-	document.getElementById('emac').innerHTML=Number(einte)+Number(edef);
-	document.getElementById('edmg').innerHTML=Number(edmg)+Number(estr);
-	document.getElementById('eini').innerHTML=Number(eref)+Number(eagi);
-	battlestart();
-}
-//csata elkezdése
-function battlestart()
-{
-	if(eini>ini)
-	{
-		createrowtoevent("Az ellenfél kezd");
-		enemyhit();
-	}
-}
 //ellenfél űt
 function enemyhit()
 {
@@ -1059,6 +957,7 @@ function enemyhit()
 		}
 		 enemyPicMove()
 }
+//player űt
 function playerhit()
 {
 	var dmg=document.getElementById('chardmg').innerHTML;
@@ -1132,7 +1031,6 @@ badLuck("P");
 }
 		
 }
-//player űt
 //Szerencse a játékban
 function goodLuck(ki)
 {

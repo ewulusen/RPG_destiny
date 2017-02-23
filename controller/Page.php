@@ -162,7 +162,15 @@ for($i=0;$i<100;$i++)
 				}	
 				if($dn[$i][$j]==4)
 				{
+					$ok=$this->model->enemyLive($i,$j);
+					if($ok==3)
+					{
 					$emy++;
+					}
+					if($ok==1)
+					{
+						$dn[$i][$j]=1;
+					}
 				}	
 				if($dn[$i][$j]==6)
 				{
@@ -184,6 +192,15 @@ for($i=0;$i<100;$i++)
 		}
 		$dn[$ex][$ey]=8;
 			//echo $ch."chest".$tr."trap".$emy."enemy".$x."-".$y."player";
+$epoz=$this->model->getEnemysPozition($iid);	
+for($z=0;$z<count($epoz);$z++)
+{
+	$exp1=explode(",",$epoz[$z]);
+	$enemyx=$exp1[0];
+	$enemyy=$exp1[1];
+	$dn[$enemyx][$enemyy]=4;
+	
+}	
 			array_push($dn,$ch);//100
 			array_push($dn,$tr);//101
 			array_push($dn,$emy);//102
@@ -262,6 +279,7 @@ public function getPlayer()
 public function enemyLive($i,$j)
 {
 	$res=$this->model->enemyLive($i,$j);
+	//echo $res."<br>";
 	return $res;
 }public function chestOpen($i,$j)
 {

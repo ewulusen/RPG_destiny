@@ -426,10 +426,27 @@ public function newPlayerPozition($x,$y)
 }
 public function enemyLive($i,$j)
 {
-$sql="select * from enemy where G_ID=".$_SESSION['dname']." and E_X=".$i." and E_Y=".$j." and EL=0";	
+$sql="select * from enemy where G_ID=".$_SESSION['dname']." and E_X=".$i." and E_Y=".$j."";	
 $res=$GLOBALS['conn']->query($sql);	
 $row_count = $res->num_rows;
-return $row_count;
+if($row_count==0)
+{
+return 1;	//nincs ott ellenfél
+}
+else
+{
+while($row=$res->fetch_array(MYSQLI_BOTH))
+{
+if($row['EL']==0)
+{
+return 2;	//ott van csak halott
+}
+else
+{
+return 3;// ott az ellenfél
+}
+}
+}
 }
 public function chestOpen($i,$j)
 {
@@ -437,6 +454,17 @@ $sql="select * from chest where G_ID=".$_SESSION['dname']." and C_X=".$i." and C
 $res=$GLOBALS['conn']->query($sql);	
 $row_count = $res->num_rows;
 return $row_count;
+}
+public function getEnemysPozition($id)
+{
+	$sql="select * from enemy where G_ID='".$id."' and EL=1";
+	$res=$GLOBALS['conn']->query($sql);
+	$enemys=array();
+	while($row=$res->fetch_array(MYSQLI_BOTH))
+	{
+		array_push($enemys,$row['E_X'].",".$row['E_Y']);
+	}
+	return $enemys;
 }
 }
 

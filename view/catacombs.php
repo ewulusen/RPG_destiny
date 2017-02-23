@@ -58,11 +58,11 @@ echo '<table >';
 						elseif($dn[$i][$j]==4)
 						{
 							$ok=$page->enemyLive($i,$j);
-							if ($ok==0)
+							if ($ok==3)
 							{
 						echo'<td style="background-color:blue; width:10px; height:5px;"></td>';
 							}
-							else
+							elseif($ok==2)
 							{
 							echo'<td style="background-color:orange; width:10px; height:5px;"></td>';
 							}
@@ -209,7 +209,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 						elseif($dn[$i][$j]==4)//enemy
 						{
 							$ok=$page->enemyLive($i,$j);
-							if ($ok==0)
+							if ($ok==3)
 							{
 							if($dn[($i+1)][$j]==7)
 							{
@@ -232,7 +232,7 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 							echo'<td class="dungeonAlap" id="'.$dn[$i][$j].'"><img src="img/beast/ant.gif" width=35px height=35px></td>';
 							}
 							}
-							else
+							elseif($ok==2)
 							{
 								echo'<td class="deathEnemy" onclick=ajaxStep(100,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}

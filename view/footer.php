@@ -1,5 +1,4 @@
-<script>
-</script><br>
+<br>
 <br>
 <br>
 <em>&copy; 2016 DisasterSoft</em>

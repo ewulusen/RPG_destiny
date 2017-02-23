@@ -286,6 +286,11 @@ public function enemyLive($i,$j)
 	$res=$this->model->chestOpen($i,$j);
 	return $res;
 }
+public function getChar($values)
+	{
+				$res=$this->model->getChar($values);
+		return $res;
+	}
 }
 
 ?>

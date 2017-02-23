@@ -58,14 +58,14 @@ border-image: url(../../img/backgrounds/border.png) 10 15 15 15 stretch;
 
 }
 .border2
-{border-style: solid;
+{
+border-style: solid;
 background-color:#ece7a6;
 border-width: 5px 5px 5px 5px;
 -moz-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
 -webkit-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
 -o-border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
 border-image: url(../../img/backgrounds/border2.jpg) 10 10 10 10 stretch;
-
 color:#000000;
 }
 .fajcard

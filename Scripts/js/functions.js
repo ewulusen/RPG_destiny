@@ -246,10 +246,11 @@ function runAway()
 }
 function editChar(id)
 {
+	document.cookie="cid="+id;
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById('menuPage').innerHTML = this.responseText;
+                document.getElementById('mainPage').innerHTML = this.responseText;
             }
         };
 		

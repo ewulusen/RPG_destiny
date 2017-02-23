@@ -61,25 +61,26 @@ public function getAllChar()
 		$charok=array();
 		$sql="SELECT `K_STR`, `K_AGI`, `K_REF`, 
 		`K_DEF`,K_LVL,`K_DEX`, `K_INT`, `K_LUC`, F_DMG,`K_CON`, 
-		`P_AC`,K_NEV,KAR_FAJ,KAR_KASZT,K_APOINT FROM `karakterl`,fegyverek,pancel WHERE KAR_ID='".$cid."' and fegyverek.F_ID=K_WEAPONS and pancel.P_ID=K_ARMOR";
+		`P_AC`,K_NEV,KAR_FAJ,KAR_KASZT,K_APOINT,K_PENZ FROM `karakterl`,fegyverek,pancel WHERE KAR_ID='".$cid."' and fegyverek.F_ID=K_WEAPONS and pancel.P_ID=K_ARMOR";
 		$res=$GLOBALS['conn']->query($sql);
 		//echo $sql;
 		while ($sor=$res->fetch_array(MYSQLI_BOTH)){	
-			array_push($charok,$sor['K_STR']);
-			array_push($charok,$sor['K_AGI']);
-			array_push($charok,$sor['K_REF']);
-			array_push($charok,$sor['K_DEF']);
-			array_push($charok,$sor['K_DEX']);
-			array_push($charok,$sor['K_INT']);
-			array_push($charok,$sor['K_LUC']);
-			array_push($charok,$sor['K_CON']);
-			array_push($charok,$sor['F_DMG']);
-			array_push($charok,$sor['P_AC']);
-			array_push($charok,$sor['KAR_FAJ']);
-			array_push($charok,$sor['KAR_KASZT']);
-			array_push($charok,$sor['K_LVL']);
-			array_push($charok,$sor['K_NEV']);
-			array_push($charok,$sor['K_APOINT']);
+			array_push($charok,$sor['K_STR']);//0
+			array_push($charok,$sor['K_AGI']);//1
+			array_push($charok,$sor['K_REF']);//2
+			array_push($charok,$sor['K_DEF']);//3
+			array_push($charok,$sor['K_DEX']);//4
+			array_push($charok,$sor['K_INT']);//5
+			array_push($charok,$sor['K_LUC']);//6
+			array_push($charok,$sor['K_CON']);//7
+			array_push($charok,$sor['F_DMG']);//8
+			array_push($charok,$sor['P_AC']);//9
+			array_push($charok,$sor['KAR_FAJ']);//10
+			array_push($charok,$sor['KAR_KASZT']);//11
+			array_push($charok,$sor['K_LVL']);//12
+			array_push($charok,$sor['K_NEV']);//13
+			array_push($charok,$sor['K_APOINT']);//14
+			array_push($charok,$sor['K_PENZ']);//15
 		}
 		return $charok;
 		

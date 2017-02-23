@@ -17,10 +17,98 @@ for($i=0;$i<8;$i++)
 	<td>'.$statNames2[$i].'</td><td><span id='.$statNames2[$i].'>'.$ch2[$i].'</span></td>
 	</tr><tr>'; 
 }
-echo '</table></div><div class="col-sm-8 border2">';
+echo '</table></div><div class="col-sm-8 border2">Itemek:<br><table class="table-bordered"><tr>';
 $items=$page->getCharItems();
-
-print_r($items);
+for($i=0;$i<count($items);$i++)
+{
+	$exp=explode("&",$items[$i]);
+	if($i%8==0)
+	{
+		if($exp[0]=="GY")
+		{
+	echo '<td><img src=img/elements/gyuru.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+			if($exp[0]=="NY")
+		{
+	echo '<td><img src=img/elements/nyaklanc.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+			if($exp[0]=="PO")
+		{
+	echo '<td><img src=img/elements/potion.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+		
+		if(!strpos($exp[2],'Egykezes Mace')) {
+		echo '<td><img src=img/elements/mace.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Egykezes kard')) {
+		echo '<td><img src=img/elements/dmg.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}	
+		if(!strpos($exp[2],'Egykezes Axe')) {
+		echo '<td><img src=img/elements/axe.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'KétKezes Axe')) {
+		echo '<td><img src=img/elements/axxe.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Kétkezes kard')) {
+		echo '<td><img src=img/elements/swword.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Kétkezes Mace')) {
+		echo '<td><img src=img/elements/macce.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Bow')) {
+		echo '<td><img src=img/elements/bow.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+			if(!strpos($exp[2],'Crossbow')) {
+		echo '<td><img src=img/elements/crossbow.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+				if(!strpos($exp[2],'Staff')) {
+		echo '<td><img src=img/elements/staff.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+				if(!strpos($exp[2],'Dagger')) {
+		echo '<td><img src=img/elements/dager.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'kis balta')) {
+		echo '<td><img src=img/elements/axe.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Bot')) {
+		echo '<td><img src=img/elements/staff.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}
+		if(!strpos($exp[2],'Kezdo kard')) {
+		echo '<td><img src=img/elements/dmg.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' dmg"></td>';
+		}	
+		if(!strpos($exp[2],'Vászon')) {
+		echo '<td><img src=img/elements/cloth.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' AC"></td>';
+		}	
+			if(!strpos($exp[2],'Bőr')) {
+		echo '<td><img src=img/elements/leather.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' AC"></td>';
+		}	
+		if(!strpos($exp[2],'Mail')) {
+		echo '<td><img src=img/elements/mail.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' AC"></td>';
+		}	
+		if(!strpos($exp[2],'Plate')) {
+		echo '<td><img src=img/elements/plate.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' AC"></td>';
+		}	
+			if(!strpos($exp[2],'Kezdo Pancel')) {
+		echo '<td><img src=img/elements/leather.png title="'.$exp[4].' '.$exp[5].'	és '.$exp[6].' AC"></td>';
+		}
+	}
+	else
+	{
+			if($exp[0]=="GY")
+		{
+	echo '<td><img src=img/elements/gyuru.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+			if($exp[0]=="NY")
+		{
+	echo '<td><img src=img/elements/nyaklanc.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+			if($exp[0]=="PO")
+		{
+	echo '<td><img src=img/elements/potion.png title="'.$exp[4].' '.$exp[5].'"></td>';
+		}
+	}
+}
+//print_r($items);
 echo'</div></div>';
 
 ?>

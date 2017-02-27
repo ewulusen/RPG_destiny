@@ -40,6 +40,13 @@ public function __construct()
 			
 		return $res;
 	}
+	public function getItem($id,$faj)
+	{
+		$res=$this->model->getItem($id,$faj);
+		
+			
+		return $res;
+	}
 	public function getShopItems()
 	{
 		$res=$this->model->getShopItems();

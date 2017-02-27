@@ -236,6 +236,7 @@ public function gameFieldCleaning()
 	unset($_COOKIE['xp']);
 	setcookie('xp', '', time()-3600, '/teszt');
 }
+
 public function getCharItems()
 {
 	$return_a=array();
@@ -249,7 +250,7 @@ public function getCharItems()
 			$res=$GLOBALS['conn']->query($sql1);
 			$item=$res->fetch_array(MYSQLI_BOTH);
 			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["F_NEV"]."&".
-			($item['F_AR']/2)."&".$item['F_SZAM']."&".$item['F_MIT']."&".$item['F_DMG']."&".$sor['I_ID']);
+			($item['F_AR']/2)."&".$item['F_SZAM']."&".$item['F_MIT']."&".$item['F_DMG']."&".$sor['I_ID']."&".$item['F_TIPUS']);
 		}
 		if($sor['I_FAJ']=="P")
 		{
@@ -257,7 +258,7 @@ public function getCharItems()
 			$res=$GLOBALS['conn']->query($sql1);
 			$item=$res->fetch_array(MYSQLI_BOTH);
 			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["P_NEV"]."&".
-			($item['P_AR']/2)."&".$item['P_SZAM']."&".$item['P_MIT']."&".$item['P_AC']."&".$sor['I_ID']);
+			($item['P_AR']/2)."&".$item['P_SZAM']."&".$item['P_MIT']."&".$item['P_AC']."&".$sor['I_ID']."&".$item['F_TIPUS']);
 		}
 		if($sor['I_FAJ']=="NY")
 		{

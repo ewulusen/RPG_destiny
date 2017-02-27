@@ -1,6 +1,6 @@
 <?php echo'
 <div class="container" id="loginpage">
-<div class="panel center panel-danger">
+<div class="panel center border2">
 <div class="panel-heading clearfix"><b>
 		<b>	<h1>Login<span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
 		</h1></b>

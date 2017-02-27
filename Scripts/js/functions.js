@@ -257,6 +257,13 @@ function editChar(id)
         xmlhttp.open("GET","view/editChar.php?id="+id, true);
         xmlhttp.send();
 }
+
+function viewON(ki)
+{
+	
+	console.log(ki);
+}
+
 function ajaxOut()
 {
 		$.ajax(

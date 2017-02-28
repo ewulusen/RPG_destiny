@@ -289,6 +289,51 @@ public function getCharItems()
 	return $return_a;
 }
 
+public function getCharOnItems()
+{
+	$return_a=array();
+	$sql="select * from itemek where I_PID='".$_COOKIE['cid']."'  and I_ON=1";
+	$eredmeny=$GLOBALS['conn']->query($sql);
+	while($sor=$eredmeny->fetch_array(MYSQLI_BOTH))
+	{
+		if($sor['I_FAJ']=="F")
+		{
+			$sql1="select * from fegyverek where F_ID=".$sor['I_FID']."";
+			$res=$GLOBALS['conn']->query($sql1);
+			$item=$res->fetch_array(MYSQLI_BOTH);
+			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["F_NEV"]."&".
+			($item['F_AR']/2)."&".$item['F_SZAM']."&".$item['F_MIT']."&".$item['F_DMG']."&".$sor['I_ID']."&".$item['F_TIPUS']);
+		}
+		if($sor['I_FAJ']=="P")
+		{
+			$sql1="select * from pancel where P_ID=".$sor['I_FID']."";
+			$res=$GLOBALS['conn']->query($sql1);
+			$item=$res->fetch_array(MYSQLI_BOTH);
+			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["P_NEV"]."&".
+			($item['P_AR']/2)."&".$item['P_SZAM']."&".$item['P_MIT']."&".$item['P_AC']."&".$sor['I_ID']."&".$item['F_TIPUS']);
+		}
+		if($sor['I_FAJ']=="NY")
+		{
+			$sql1="select * from nyaklanc where NY_ID=".$sor['I_FID']."";
+			$res=$GLOBALS['conn']->query($sql1);
+			$item=$res->fetch_array(MYSQLI_BOTH);
+			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["NY_NEV"]."&".
+			($item['NY_AR']/2)."&".$item['NY_SZAM']."&".$item['NY_MIT']."&".$sor['I_ID']);
+		}
+		if($sor['I_FAJ']=="GY")
+		{
+			$sql1="select * from gyuruk where GY_ID=".$sor['I_FID']."";
+			$res=$GLOBALS['conn']->query($sql1);
+			$item=$res->fetch_array(MYSQLI_BOTH);
+			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["GY_NEV"]."&".
+			($item['GY_AR']/2)."&".$item['GY_SZAM']."&".$item['GY_MIT']."&".$sor['I_ID']);
+		}
+				
+	}
+	return $return_a;
+}
+
+
 public function getShopItems()
 {
 	$return_a=array();
@@ -467,6 +512,19 @@ public function getEnemysPozition($id)
 		array_push($enemys,$row['E_X'].",".$row['E_Y']);
 	}
 	return $enemys;
+}
+public function getXpToLVL($id)
+{
+	$sql="select K_XP,K_LVL from karakterl where KAR_ID=".$id."";	
+	$res=$GLOBALS['conn']->query($sql);	
+	$row=$res->fetch_array(MYSQLI_BOTH);
+	$lvl=$row['K_LVL'];
+	$xp=$row['K_XP'];
+	$sql="select lvl,xp from xp where lvl=".$lvl."+1";	
+	$res=$GLOBALS['conn']->query($sql);	
+	$row=$res->fetch_array(MYSQLI_BOTH);
+	$ret=$lvl.",".$xp.",".$row['xp'];
+	return $ret;
 }
 }
 

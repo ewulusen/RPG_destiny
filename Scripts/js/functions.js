@@ -256,14 +256,190 @@ function editChar(id)
 		
         xmlhttp.open("GET","view/editChar.php?id="+id, true);
         xmlhttp.send();
+		szamol();
 }
 
 function viewON(ki)
 {
+	var exp=ki.split(",");
+	if(exp.length==5)
+	{
+	if(exp[4]=="P")
+	{
+		var str=0;
+		var ac=exp[3];
+	}
+	else
+	{
+		var str=exp[3];
+		var ac=0;
+	}
 	
-	console.log(ki);
+	}
+	else
+	{
+		var str=0;
+		var ac=0;
+	}
+	switch(exp[2])
+	{
+		case "DEF":
+		hoverIt("Defend",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "AGI":
+		hoverIt("Agility",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "DEX":
+		hoverIt("Dexterity",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "CON":
+		hoverIt("Constitut",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "INT":
+		hoverIt("Inteligent",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "STR":
+		hoverIt("Streng",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "LUC":
+		hoverIt("Luck",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "REF":
+		hoverIt("Reflex",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		
+	}
+	
+	
 }
-
+function viewOFF(ki)
+{
+	console.log(ki);
+	var exp=ki.split(",");
+	if(exp.length==5)
+	{
+	if(exp[4]=="P")
+	{
+		var str=0;
+		var ac=exp[3];
+	}
+	else
+	{
+		var str=exp[3];
+		var ac=0;
+	}
+	
+	}
+	else
+	{
+		var str=0;
+		var ac=0;
+	}
+	switch(exp[2])
+	{
+		case "DEF":
+		leaveIt("Defend",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "AGI":
+		leaveIt("Agility",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "DEX":
+		leaveIt("Dexterity",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "CON":
+		leaveIt("Constitut",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "INT":
+		leaveIt("Inteligent",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "STR":
+		leaveIt("Streng",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "LUC":
+		leaveIt("Luck",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "REF":
+		leaveIt("Reflex",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		
+	}
+}
+function leaveIt(mit,elojel,mennyivel,str,ac)
+{
+	var dummy=document.getElementById(mit).innerHTML;
+	if(elojel=="+")
+	{
+		var osszeg=Number(dummy)+Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="black";
+	}
+	else
+	{
+		var osszeg=Number(dummy)-Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="black";
+	}
+	if(ac!=0)
+	{
+	document.getElementById("Defend").innerHTML=Number(document.getElementById("Defend").innerHTML)-Number(ac);
+	document.getElementById("Defend").style.color="black";
+	}
+	if(str!=0)
+	{
+	document.getElementById("Streng").innerHTML=Number(document.getElementById("Streng").innerHTML)-Number(str);
+	document.getElementById("Streng").style.color="black";	
+		document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)-Number(str);
+	document.getElementById("DMG").style.color="black";	
+	}
+}
+function hoverIt(mit,elojel,mennyivel,str,ac)
+{
+	var dummy=document.getElementById(mit).innerHTML
+	if(elojel=="+")
+	{
+		var osszeg=Number(dummy)+Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="green";
+	}
+	else
+	{
+		var osszeg=Number(dummy)-Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="red";
+	}
+		
+	if(ac!=0)
+	{
+	document.getElementById("Defend").innerHTML=Number(document.getElementById("Defend").innerHTML)+Number(ac);
+	document.getElementById("Defend").style.color="green";
+	}
+	if(str!=0)
+	{
+	document.getElementById("Streng").innerHTML=Number(document.getElementById("Streng").innerHTML)+Number(str);
+	document.getElementById("Streng").style.color="green";	
+	document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)+Number(str);
+	document.getElementById("DMG").style.color="green";	
+	}
+		
+		
+	
+}
 function ajaxOut()
 {
 		$.ajax(
@@ -582,92 +758,6 @@ function perception(game)
 	//console.log(player+";"+enemy+";"+chest);
 }			
 
-//mozgás a mapponű
-/*
-function moveTo(x,y)
-{
-	if(alap_move>0)
-	{
-	if(x=="-")
-	{
-		if((Number(player)-Number(y))>0)
-		{
-		player=Number(player)-Number(y);
-		drawMap();
-		alap_move=Number(alap_move)-Number(1);
-		document.getElementById('move').innerHTML=alap_move;
-		}
-		else 
-		{
-			document.getElementById('error').innerHTML="oda nem léphetsz";
-		}
-	}
-	if(x=="+")
-	{
-		if((Number(player)+Number(y))<64)
-		{
-		player=Number(player)+Number(y);
-		drawMap();
-			alap_move=Number(alap_move)-Number(1);
-		document.getElementById('move').innerHTML=alap_move;
-		}
-		else 
-		{
-			document.getElementById('error').innerHTML="oda nem léphetsz";
-		}
-	}
-	}
-	else 
-	{
-		document.getElementById('move').innerHTML="elfogyott a mozgásod fejezd be a köröd";
-	}
-}*/
-//mozgás után újrarajzoljuk a mappot az aktuális poziciónkkal
-
-/*function drawMap()
-{
-	gamemap=[];
-	//console.log(gamemap);
-	if(document.getElementById('gamefield'))
-	{
-	var z=0;
-	////console.log(epos+" "+kpos);
-	var tbl = document.getElementById('gamefield');
-	tbl.innerHTML="";
-    var new_tbdy = document.createElement('tbody');
-    for (var i = 0; i < 8; i++) {
-        var tr = document.createElement('tr');
-        for (var j = 0; j < 8; j++) {
-                var td = document.createElement('td');
-				td.id=i+","+j;
-				if(z==player)
-				{
-				var imgsrc=document.createElement('img');
-					imgsrc.src="player_pic/"+faj+kaszt+"g.gif";
-                td.appendChild(imgsrc);
-				gamemap.push(z+',p');
-				}
-				
-				else if(z==enemy && indike=='0')
-				{
-				gamemap.push(z+',e');}
-				else if(z==chest)
-				{
-				gamemap.push(z+',c');
-				} 
-				else {
-				gamemap.push(z);}
-				tr.appendChild(td);
-			z++;			
-            }
-		 new_tbdy.appendChild(tr);	
-        }
-       
-   // console.log(gamemap);
-    tbl.appendChild(new_tbdy);
-perception(gamemap);
-}
-}*/
 //vége a játéknak player nyert
 function endGamePV ()
 {

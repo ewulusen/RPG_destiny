@@ -40,6 +40,13 @@ public function __construct()
 			
 		return $res;
 	}
+	public function getCharOnItems()
+	{
+		$res=$this->model->getCharOnItems();
+		
+			
+		return $res;
+	}
 	public function getItem($id,$faj)
 	{
 		$res=$this->model->getItem($id,$faj);
@@ -298,6 +305,11 @@ public function getChar($values)
 				$res=$this->model->getChar($values);
 		return $res;
 	}
+public function	getXpToLVL($id)
+{
+	$res=$this->model->getXpToLVL($id);
+	return $res;
+}
 }
 
 ?>

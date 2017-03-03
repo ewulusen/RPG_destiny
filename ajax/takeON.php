@@ -1,0 +1,86 @@
+<?php
+include_once("../Scripts/db.php");
+@session_start();
+$mi=$_GET['id'];
+$exp=explode(",",$mi);
+$sql="select I_ID from itemek where I_FID=".$exp[0]." and I_FAJ='".$exp[1]."' and I_ON='0' and I_PID='".$_SESSION['id']."'  limit 1";
+$res=$GLOBALS['conn']->query($sql) or die("hiba az item lekérdezésében ");
+$szam=$res->num_rows;
+//van e ilyen itemje
+
+if($szam>0)
+{
+$item=$res->fetch_array(MYSQLI_BOTH);
+switch ($exp[1])
+{
+	case "F":
+		levesz(1,"fegyverek",$exp,$item);
+	break;
+	case "P":
+		levesz(1,"pancel",$exp,$item);
+	break;
+	case "GY":
+		levesz(2,"gyuruk",$exp,$item);
+	break;
+	case "NY":
+		levesz(1,"nyaklanc",$exp,$item);
+	break;
+	case "PO":
+		megisz($exp,$item);
+	break;
+	
+}
+
+}
+else
+{}
+
+function levesz($limit,$honnan,$exp,$item)
+{
+	$ellen="select I_ID from itemek where I_FAJ='".$exp[1]."' and I_ON='1' and I_PID='".$_SESSION['id']."'";
+	$resEllen=$GLOBALS['conn']->query($ellen) or die("hiba az item lekérdezésében ");
+	$szamEllen=$resEllen->num_rows;
+	if($szamEllen>$limit)
+	{
+		$sqlEllen="update itemek set I_ON='0' where  I_FAJ='".$exp[1]."' and I_PID='".$_SESSION['id']."' limit 1";
+		$GLOBALS['conn']->query($sqlEllen);
+	}
+	$sqlitem="select ".$exp[1]."_SZAM,".$exp[1]."_MIT from ".$honnan." where ".$exp[1]."_ID=".$exp[0]." ";
+	echo $sqlitem;
+	$resitem=$GLOBALS['conn']->query($sqlitem) or die("hiba a ".$honnan." lekérdezésében ");
+	$items=$resitem->fetch_array(MYSQLI_BOTH);
+	 $mit=explode(",",$items[0]);
+	$elojel=$mit[0];
+	$mennyit=$mit[1];
+	$mennyit=substr($mennyit, 0, -1);
+	$sqlUpdate="update itemek set I_ON='1' where I_ID='".$item['I_ID']."'";
+	$GLOBALS['conn']->query($sqlUpdate) or die("hiba az item felvételében ");
+	$egyeb="";
+	if($honnan="fegyverek")
+	{
+		$egyeb="K_WEAPONS=".$exp[0]."";
+	}
+	if($honnan="pancel")
+	{
+		$egyeb="K_ARMOR=".$exp[0]."";
+	}
+	$sqlUpdate="update karakterl set K_".$items[1]."=K_".$items[1]."".$elojel."".$mennyit.",".$egyeb." where KAR_ID='".$_SESSION['id']."'";
+	echo $sqlUpdate;
+	$GLOBALS['conn']->query($sqlUpdate) or die("hiba a karakterlap szerkesztésében ");
+}
+function megisz($exp,$item)
+{
+	
+	$sqlitem="select ".$exp[1]."_SZAM,".$exp[1]."_MIT from potion where PO_ID=".$exp[0]." ";
+	$resitem=$GLOBALS['conn']->query($sqlitem) or die("hiba a potion lekérdezésében ");
+	$items=$resitem->fetch_array(MYSQLI_BOTH);
+	$mit=explode(",",$items["F_SZAM"]);
+	$elojel=$mit[0];
+	$mennyit=$mit[1];
+	$mennyit=substr($mennyit, 0, -1);
+	$sqlUpdate="delete itemek where I_ID='".$item['I_ID']."'";
+	$GLOBALS['conn']->query($sqlUpdate) or die("hiba az item törlésénél ");
+	$sqlUpdate="update karakterlap set K_".$items[1]."=K_".$items[1]."".$elojel."".$mennyit.", where KAR_ID='".$_SESSION['id']."'";
+	$GLOBALS['conn']->query($sqlUpdate) or die("hiba a karakterlap szerkesztésében ");
+}
+?>

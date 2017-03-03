@@ -28,7 +28,9 @@ echo '</table>
   </div>
 </div>
 </div>
+
 <div class="col-sm-8 border2">Itemek:<br><table class="table-bordered"><tr>';
+//táskádban lévő tárgyak
 $items=$page->getCharItems();
 $items2=$page->getCharOnItems();
 
@@ -49,12 +51,13 @@ for($i=0;$i<count($items);$i++)
  {
 	 $negalt="+";
  }
+ $takeOn=$exp[1].",".$exp[0];
  $ki2=$negalt.','.$mennyit.','.$exp[5];
  if($i%8==0)
  {
   if($exp[0]=="GY")
   {
- echo '<td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")  ></td>';
+ echo '<td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")  onclick=takeON("'.$takeOn.'")></td>';
   }
    if($exp[0]=="NY")
   {
@@ -129,7 +132,7 @@ $ki2=$ki2.",".$exp[6].",P";
  {
    if($exp[0]=="GY")
   {
- echo '<td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+ echo '<td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'") onclick=takeON("'.$takeOn.'")></td>';
   }
    if($exp[0]=="NY")
   {
@@ -202,7 +205,7 @@ $ki2=$ki2.",".$exp[6].",P";
  }
 }
 
-//print_r($items);
+//rajtad lévő tárgyak
 echo'</table>
 <div class="content">
 		<div class="top_block block_1">
@@ -244,21 +247,21 @@ echo'</table>
 						$ki2=$ki2.",".$exp[6].",P";
 						$emberiNyelv=$emberiNyelv." és ".$exp[6]." ac";
 						  if($exp[8]=="1") {
-						  echo '<tr><td><img src=img/elements/cloth.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						  echo '<tr><td><img src=img/elements/cloth.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  } 
 						  if($exp[8]=="2") {
-						  echo '<tr><td><img src=img/elements/leather.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						  echo '<tr><td><img src=img/elements/leather.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  } 
 						  if($exp[8]=="3") {
-						  echo '<tr><td><img src=img/elements/mail.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						  echo '<tr><td><img src=img/elements/mail.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  } 
 						  if($exp[8]=="4") {
-						  echo '<tr><td><img src=img/elements/plate.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						  echo '<tr><td><img src=img/elements/plate.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  } 
 					   }
 					    if($exp[0]=="NY")
 						  {
-						 echo '<tr><td><img src=img/elements/nyaklanc.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						 echo '<tr><td><img src=img/elements/nyaklanc.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  }
 			}
 			echo'
@@ -289,7 +292,7 @@ echo'</table>
 				 $ki2=$negalt.','.$mennyit.','.$exp[5];
 					    if($exp[0]=="GY")
 						  {
-						 echo '<table class="table" border=2><tr><td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td></tr>';
+						 echo '<table class="table" border=2><tr><td><img src=img/elements/gyuru.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td></tr>';
 						  }
 			}
 			echo'</table></div>
@@ -328,40 +331,40 @@ echo'</table>
     $ki2=$ki2.",".$exp[6].",F";
 	$emberiNyelv=$emberiNyelv." és ".$exp[6]." dmg";
   if($exp[8]=="5") {
-  echo '<td><img src=img/elements/mace.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/mace.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="1") {
-  echo '<td><img src=img/elements/dmg.png title="'.$emberiNyelv.'" onmouseover=viewOFF("'.$ki2.'") onmouseleave=viewON("'.$ki.'")></td>';
+  echo '<td><img src=img/elements/dmg.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   } 
   if($exp[8]=="3") {
-  echo '<td><img src=img/elements/axe.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/axe.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="4") {
-  echo '<td><img src=img/elements/axxe.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/axxe.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="2") {
-  echo '<td><img src=img/elements/swword.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/swword.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="6") {
-  echo '<td><img src=img/elements/macce.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/macce.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="7") {
-  echo '<td><img src=img/elements/bow.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/bow.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="8") {
-  echo '<td><img src=img/elements/crossbow.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/crossbow.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="9") {
-  echo '<td><img src=img/elements/staff.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/staff.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="10") {
-  echo '<td><img src=img/elements/dager.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/dager.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="3") {
-  echo '<td><img src=img/elements/axe.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/axe.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewIOFF("'.$ki2.'")></td>';
   }
   if($exp[8]=="9") {
-  echo '<td><img src=img/elements/staff.png title="'.$emberiNyelv.'" onmouseover=viewON("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
+  echo '<td><img src=img/elements/staff.png title="'.$emberiNyelv.'" onmouseover=viewION("'.$ki.'") onmouseleave=viewOFF("'.$ki2.'")></td>';
   }
 
    }

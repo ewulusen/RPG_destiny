@@ -320,9 +320,87 @@ function viewON(ki)
 	
 	
 }
+//rajtad lévő itemek főlé ha viszi az egeret
+function viewION(ki)
+{
+	var exp=ki.split(",");
+	if(exp.length==5)
+	{
+	if(exp[4]=="P")
+	{
+		var str=0;
+		var ac=exp[3];
+	}
+	else
+	{
+		var str=exp[3];
+		var ac=0;
+	}
+	
+	}
+	else
+	{
+		var str=0;
+		var ac=0;
+	}
+	switch(exp[2])
+	{
+		case "DEF":
+		hoverIIt("Defend",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "AGI":
+		hoverIIt("Agility",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "DEX":
+		hoverIIt("Dexterity",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "CON":
+		hoverIIt("Constitut",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "INT":
+		hoverIIt("Inteligent",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "STR":
+		hoverIIt("Streng",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "LUC":
+		hoverIIt("Luck",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "REF":
+		hoverIIt("Reflex",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		
+	}
+	
+	
+}
+//tárgy felvétele
+function takeON(mi)
+{
+$.ajax(
+		{
+			type:"GET",
+			data:"id="+mi,
+			url:'ajax/takeON.php',
+			success:function(result)
+				{
+					console.log(result);
+				}
+				});	
+			editChar(getCookie("cid"));	
+      
+}
 function viewOFF(ki)
 {
-	console.log(ki);
+	
 	var exp=ki.split(",");
 	if(exp.length==5)
 	{
@@ -380,6 +458,67 @@ function viewOFF(ki)
 		
 	}
 }
+//saját cucc egér fölé vivés vissza állít mindent 
+function viewIOFF(ki)
+{
+	
+	var exp=ki.split(",");
+	if(exp.length==5)
+	{
+	if(exp[4]=="P")
+	{
+		var str=0;
+		var ac=exp[3];
+	}
+	else
+	{
+		var str=exp[3];
+		var ac=0;
+	}
+	
+	}
+	else
+	{
+		var str=0;
+		var ac=0;
+	}
+	switch(exp[2])
+	{
+		case "DEF":
+		leaveIIt("Defend",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "AGI":
+		leaveIIt("Agility",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "DEX":
+		leaveIIt("Dexterity",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "CON":
+		leaveIIt("Constitut",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "INT":
+		leaveIIt("Inteligent",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "STR":
+		leaveIIt("Streng",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "LUC":
+		leaveIIt("Luck",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		case "REF":
+		leaveIIt("Reflex",exp[0],exp[1],str,ac);
+		szamol();
+		break;
+		
+	}
+}
 function leaveIt(mit,elojel,mennyivel,str,ac)
 {
 	var dummy=document.getElementById(mit).innerHTML;
@@ -405,6 +544,35 @@ function leaveIt(mit,elojel,mennyivel,str,ac)
 	document.getElementById("Streng").innerHTML=Number(document.getElementById("Streng").innerHTML)-Number(str);
 	document.getElementById("Streng").style.color="black";	
 		document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)-Number(str);
+	document.getElementById("DMG").style.color="black";	
+	}
+}
+//saját cucc vissza színezés mindent alapra
+function leaveIIt(mit,elojel,mennyivel,str,ac)
+{
+	var dummy=document.getElementById(mit).innerHTML;
+	if(elojel=="-")
+	{
+		var osszeg=Number(dummy)+Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="black";
+	}
+	else
+	{
+		var osszeg=Number(dummy)-Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="black";
+	}
+	if(ac!=0)
+	{
+	document.getElementById("Defend").innerHTML=Number(document.getElementById("Defend").innerHTML)+Number(ac);
+	document.getElementById("Defend").style.color="black";
+	}
+	if(str!=0)
+	{
+	document.getElementById("Streng").innerHTML=Number(document.getElementById("Streng").innerHTML)+Number(str);
+	document.getElementById("Streng").style.color="black";	
+	document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)+Number(str);
 	document.getElementById("DMG").style.color="black";	
 	}
 }
@@ -435,6 +603,39 @@ function hoverIt(mit,elojel,mennyivel,str,ac)
 	document.getElementById("Streng").style.color="green";	
 	document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)+Number(str);
 	document.getElementById("DMG").style.color="green";	
+	}
+		
+		
+	
+}
+//színezés számolás  a saját itemekénl
+function hoverIIt(mit,elojel,mennyivel,str,ac)
+{
+	var dummy=document.getElementById(mit).innerHTML
+	if(elojel=="-")
+	{
+		var osszeg=Number(dummy)+Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="green";
+	}
+	else
+	{
+		var osszeg=Number(dummy)-Number(mennyivel);
+		document.getElementById(mit).innerHTML=osszeg;
+		document.getElementById(mit).style.color="red";
+	}
+		
+	if(ac!=0)
+	{
+	document.getElementById("Defend").innerHTML=Number(document.getElementById("Defend").innerHTML)-Number(ac);
+	document.getElementById("Defend").style.color="red";
+	}
+	if(str!=0)
+	{
+	document.getElementById("Streng").innerHTML=Number(document.getElementById("Streng").innerHTML)-Number(str);
+	document.getElementById("Streng").style.color="red";	
+	document.getElementById("DMG").innerHTML=Number(document.getElementById("DMG").innerHTML)-Number(str);
+	document.getElementById("DMG").style.color="red";	
 	}
 		
 		

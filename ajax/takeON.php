@@ -7,7 +7,6 @@ $sql="select I_ID from itemek where I_FID=".$exp[0]." and I_FAJ='".$exp[1]."' an
 $res=$GLOBALS['conn']->query($sql) or die("hiba az item lekérdezésében ");
 $szam=$res->num_rows;
 //van e ilyen itemje
-
 if($szam>0)
 {
 $item=$res->fetch_array(MYSQLI_BOTH);
@@ -40,47 +39,79 @@ function levesz($limit,$honnan,$exp,$item)
 	$ellen="select I_ID from itemek where I_FAJ='".$exp[1]."' and I_ON='1' and I_PID='".$_SESSION['id']."'";
 	$resEllen=$GLOBALS['conn']->query($ellen) or die("hiba az item lekérdezésében ");
 	$szamEllen=$resEllen->num_rows;
-	if($szamEllen>$limit)
+	//echo $szamEllen."->".$limit;
+	if($szamEllen==$limit)
 	{
-		$sqlEllen="update itemek set I_ON='0' where  I_FAJ='".$exp[1]."' and I_PID='".$_SESSION['id']."' limit 1";
+		$sqlEllen="select I_ID,I_FID,I_FAJ from  itemek  where  I_FAJ='".$exp[1]."' and I_PID='".$_SESSION['id']."' and I_ON='1' limit 1";
+		$resEllen=$GLOBALS['conn']->query($sqlEllen);
+		$itemEllen=$resEllen->fetch_array(MYSQLI_BOTH);
+		$sqlitem="select ".$exp[1]."_SZAM,".$exp[1]."_MIT from ".$honnan." where ".$exp[1]."_ID=".$itemEllen['I_FID']." ";
+		$resitem=$GLOBALS['conn']->query($sqlitem) or die("hiba a ".$honnan." lekérdezésében ");
+		$items=$resitem->fetch_array(MYSQLI_BOTH);
+		$mit=explode(",",$items[0]);
+		$elojel=$mit[0];
+		$mennyit=$mit[1];
+		$mennyit=substr($mennyit, 0, -1);
+		$egyeb="";
+		if($elojel=="+")
+		{
+			$elojel="-";
+		}
+		else
+		{
+			$elojel="+";
+		}
+		if($honnan=="fegyverek")
+		{
+		$egyeb=",K_WEAPONS=''";
+		}
+		if($honnan=="pancel")
+		{
+		$egyeb=",K_ARMOR=''";
+		}
+	$sqlUpdate="update karakterl set K_".$items[1]."=(K_".$items[1]."".$elojel."".$mennyit.")".$egyeb." where KAR_ID='".$_SESSION['id']."'";
+	$GLOBALS['conn']->query($sqlUpdate) or die("hiba a karakterlap szerkesztésében ");
+		$sqlEllen="update itemek set I_ON='0' where  I_ID='".$itemEllen['I_ID']."'";
+		//echo $sqlEllen;
 		$GLOBALS['conn']->query($sqlEllen);
 	}
 	$sqlitem="select ".$exp[1]."_SZAM,".$exp[1]."_MIT from ".$honnan." where ".$exp[1]."_ID=".$exp[0]." ";
-	echo $sqlitem;
+	//echo $sqlitem;
 	$resitem=$GLOBALS['conn']->query($sqlitem) or die("hiba a ".$honnan." lekérdezésében ");
 	$items=$resitem->fetch_array(MYSQLI_BOTH);
 	 $mit=explode(",",$items[0]);
 	$elojel=$mit[0];
 	$mennyit=$mit[1];
 	$mennyit=substr($mennyit, 0, -1);
-	$sqlUpdate="update itemek set I_ON='1' where I_ID='".$item['I_ID']."'";
+	$sqlUpdate="update itemek set I_ON='1' where I_FID='".$exp[0]."' and I_FAJ='".$exp[1]."' and i_PID='".$_SESSION['id']."'";
 	$GLOBALS['conn']->query($sqlUpdate) or die("hiba az item felvételében ");
 	$egyeb="";
-	if($honnan="fegyverek")
+	if($honnan=="fegyverek")
 	{
-		$egyeb="K_WEAPONS=".$exp[0]."";
+		$egyeb=",K_WEAPONS=".$exp[0]."";
 	}
-	if($honnan="pancel")
+	if($honnan=="pancel")
 	{
-		$egyeb="K_ARMOR=".$exp[0]."";
+		$egyeb=",K_ARMOR=".$exp[0]."";
 	}
-	$sqlUpdate="update karakterl set K_".$items[1]."=K_".$items[1]."".$elojel."".$mennyit.",".$egyeb." where KAR_ID='".$_SESSION['id']."'";
-	echo $sqlUpdate;
+	$sqlUpdate="update karakterl set K_".$items[1]."=(K_".$items[1]."".$elojel."".$mennyit.")".$egyeb." where KAR_ID='".$_SESSION['id']."'";
+	//echo $sqlUpdate;
 	$GLOBALS['conn']->query($sqlUpdate) or die("hiba a karakterlap szerkesztésében ");
 }
 function megisz($exp,$item)
 {
 	
-	$sqlitem="select ".$exp[1]."_SZAM,".$exp[1]."_MIT from potion where PO_ID=".$exp[0]." ";
+	$sqlitem="select PO_SZAM,PO_MIT from potion where PO_ID=".$exp[0]." ";
 	$resitem=$GLOBALS['conn']->query($sqlitem) or die("hiba a potion lekérdezésében ");
 	$items=$resitem->fetch_array(MYSQLI_BOTH);
-	$mit=explode(",",$items["F_SZAM"]);
+	$mit=explode(",",$items["PO_SZAM"]);
 	$elojel=$mit[0];
 	$mennyit=$mit[1];
 	$mennyit=substr($mennyit, 0, -1);
-	$sqlUpdate="delete itemek where I_ID='".$item['I_ID']."'";
+	$sqlUpdate="delete from  itemek where I_ID='".$item['I_ID']."'";
 	$GLOBALS['conn']->query($sqlUpdate) or die("hiba az item törlésénél ");
-	$sqlUpdate="update karakterlap set K_".$items[1]."=K_".$items[1]."".$elojel."".$mennyit.", where KAR_ID='".$_SESSION['id']."'";
+	$sqlUpdate="update karakterl set K_".$items[1]."=(K_".$items[1]."".$elojel."".$mennyit.") where KAR_ID='".$_SESSION['id']."'";
+	echo $sqlUpdate;
 	$GLOBALS['conn']->query($sqlUpdate) or die("hiba a karakterlap szerkesztésében ");
 }
 ?>

@@ -257,6 +257,10 @@ function editChar(id)
         xmlhttp.open("GET","view/editChar.php?id="+id, true);
         xmlhttp.send();
 		szamol();
+		if(indike==1)
+			{
+			document.getElementById('error').innerHTML="Nem veheted fel ezt a fegyvert mert a  kasztod nem tudja használni!"	
+			}
 }
 
 function viewON(ki)
@@ -385,6 +389,7 @@ function viewION(ki)
 //tárgy felvétele
 function takeON(mi)
 {
+
 $.ajax(
 		{
 			type:"GET",
@@ -392,7 +397,24 @@ $.ajax(
 			url:'ajax/takeON.php',
 			success:function(result)
 				{
-					console.log(result);
+					indike=result;		
+		
+				}
+				});	
+		editChar(getCookie("cid"));		
+			
+      
+}
+function takeOFF(mi)
+{
+$.ajax(
+		{
+			type:"GET",
+			data:"id="+mi,
+			url:'ajax/takeOFF.php',
+			success:function(result)
+				{
+					//console.log(result);
 				}
 				});	
 			editChar(getCookie("cid"));	
@@ -803,13 +825,13 @@ function szamol()
 {
 	if(document.getElementById('AC'))
 	{
-	document.getElementById('AC').innerHTML=Number(document.getElementById('Constitut').innerHTML)+Number(document.getElementById('Defend').innerHTML);
+	document.getElementById('AC').innerHTML=Number(document.getElementById('Constitut').innerHTML)+Number(document.getElementById('Defend').innerHTML)+Number(document.getElementById('acArmor').innerHTML);
 	document.getElementById('MAC').innerHTML=Number(document.getElementById('Inteligent').innerHTML)+Number(document.getElementById('Defend').innerHTML);
 	document.getElementById('Mana').innerHTML=Number(document.getElementById('Inteligent').innerHTML)*Number(10);
 	document.getElementById('Perception').innerHTML=Number(document.getElementById('Inteligent').innerHTML)+Number(document.getElementById('Reflex').innerHTML);
 	document.getElementById('Iniciative').innerHTML=Number(document.getElementById('Reflex').innerHTML)+Number(document.getElementById('Agility').innerHTML);
 	document.getElementById('HP').innerHTML=Number(document.getElementById('Constitut').innerHTML)+Number(document.getElementById('Streng').innerHTML)+Number(document.getElementById('Defend').innerHTML);
-}
+	}
 }
 szamol();
 //karakterkészítés/kitöltött mindent
@@ -837,7 +859,7 @@ function tovabb()
 			url:'ajax/createChar.php?values='+faj+','+kaszt+','+str+','+agi+','+def+','+dex+','+ref+','+inte+','+con+','+luck+','+kocka+','+nev,
 			success:function(result)
 				{
-				console.log(result+"result");
+				//console.log(result+"result");
 				id=result;
 				document.cookie="cid="+id;
 				}
@@ -863,15 +885,9 @@ $.ajax(
 		document.getElementById('error').innerHTML='Töltsd ki a nevet!';
 	}
 }	
-
-function firstStory()
+function saveChar()
 {
-	ajaxCatacombsMenu()		
-	ajaxCatacombs();
-}
-function updateChar()
-{
-	var str=document.getElementById('Streng').innerHTML;
+var str=document.getElementById('Streng').innerHTML;
 	var agi=document.getElementById('Agility').innerHTML;
 	var def=document.getElementById('Defend').innerHTML;
 	var dex=document.getElementById('Dexterity').innerHTML;
@@ -880,11 +896,24 @@ function updateChar()
 	var con=document.getElementById('Constitut').innerHTML;
 	var luck=document.getElementById('Luck').innerHTML;
 	var kocka=document.getElementById('kocka').innerHTML;
-	var cid=document.getElementById('cid').innerHTML;
-	window.location.href='index.php?do=upChar&values='+str+','+agi+','+def+','+dex+','+ref+
-	','+inte+','+con+','+luck+','+kocka+','+cid;
+	$.ajax(
+		{
+			type:"GET",
+			url:'ajax/saveChar.php',
+			data:{'str':str,'agi':agi,'def':def,'dex':dex,'ref':ref,'inte':inte,'con':con,'luck':luck,'kocka':kocka},
+			success:function(result)
+				{
+				
+				}
+				});
+				editChar(getCookie("cid"));	
+}
+function firstStory()
+{
+	ajaxCatacombsMenu()		
+	ajaxCatacombs();
+}
 
-}	
 
 
 /**észlelés, átvizsgálja a játékteret

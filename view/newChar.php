@@ -103,5 +103,6 @@ include ('footer.php');
 			}
 			echo'<tr><td colspan=4> Karaktered neve:</td><td colspan=2><input type=text name=name id="nev" style="color:black"></td></tr>
 			</table><br><span id=error></span><br> <button class="btn btn-primary" onclick="tovabb()">kész</button><br>';
-			include ('footer.php');
+			
+			echo "<oreo class='stealth' id='acArmor'>4</oreo>";include ('footer.php');
 			}

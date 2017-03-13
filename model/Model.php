@@ -318,7 +318,7 @@ public function getCharOnItems()
 			$res=$GLOBALS['conn']->query($sql1);
 			$item=$res->fetch_array(MYSQLI_BOTH);
 			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["NY_NEV"]."&".
-			($item['NY_AR']/2)."&".$item['NY_SZAM']."&".$item['NY_MIT']."&".$sor['I_ID']);
+			($item['NY_AR']/2)."&".$item['NY_SZAM']."&".$item['NY_MIT']."& &".$sor['I_ID']);
 		}
 		if($sor['I_FAJ']=="GY")
 		{
@@ -326,7 +326,7 @@ public function getCharOnItems()
 			$res=$GLOBALS['conn']->query($sql1);
 			$item=$res->fetch_array(MYSQLI_BOTH);
 			array_push($return_a,$sor['I_FAJ']."&".$sor['I_FID']."&".$item["GY_NEV"]."&".
-			($item['GY_AR']/2)."&".$item['GY_SZAM']."&".$item['GY_MIT']."&".$sor['I_ID']);
+			($item['GY_AR']/2)."&".$item['GY_SZAM']."&".$item['GY_MIT']."& &".$sor['I_ID']);
 		}
 				
 	}

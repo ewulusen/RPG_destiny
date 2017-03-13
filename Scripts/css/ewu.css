@@ -266,6 +266,10 @@ opacity: 0.9;
 {
 	display:none;
 }
+.stealth
+{
+	display:none;
+}
 .enemyTurn
 {
 	background-color:#000000;

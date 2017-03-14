@@ -295,7 +295,8 @@ public function enemyLive($i,$j)
 	$res=$this->model->enemyLive($i,$j);
 	//echo $res."<br>";
 	return $res;
-}public function chestOpen($i,$j)
+}
+public function chestOpen($i,$j)
 {
 	$res=$this->model->chestOpen($i,$j);
 	return $res;

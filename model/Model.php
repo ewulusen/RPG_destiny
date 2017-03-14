@@ -5,9 +5,9 @@ class Model {
 	public function loginCheck($username,$password)
 	{
 		
-		$sql="(SELECT * FROM `FELHASZ`WHERE FH_FHNEV='$username' AND FH_JEL='$password' )";
-		
-        $eredmeny=$GLOBALS['conn']->query($sql) ;
+		$sql="SELECT * FROM `felhasz` WHERE FH_FHNEV='$username' AND FH_JEL='$password'";
+		//echo $sql;
+        $eredmeny=$GLOBALS['conn']->query($sql) or die("hiba a felhasználó lekérésénél") ;
 		$row_count = $eredmeny->num_rows;
 if ( $row_count!= 1) {
 	return 0;

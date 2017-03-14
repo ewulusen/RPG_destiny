@@ -13,11 +13,40 @@ var indike=0;
 var xp=0;
 var lvl=getParameterByName('lvl');
 var delay=2000; //2 second
+var delay1=4000; //4 second
 var delay2=8000; //8 second
 var delay3=15000; //15 second
 var page;
 var enemyNumber;
 ///////////////////////////////////////////////////
+function registration()
+{
+	usern=$("#username").val();
+	psw=$("#psw").val();
+	console.log(usern+","+psw)
+	$.ajax(
+		{
+			type:"GET",
+			data:{"username":usern,"psw":psw},
+			url:'ajax/reg.php',
+			success:function(result)
+				{
+					console.log(result);
+				}
+		});
+		ajaxStartPage('loginPage','mainPage')
+}
+function logOut()
+{
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("mainPage").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "ajax/logOut.php", true);
+        xmlhttp.send();
+}
 function ajaxStep(move,jel)
 {
 	var step=document.getElementById('charmove').innerHTML;
@@ -699,6 +728,49 @@ function ajaxOpenChest(i,j)
         xmlhttp.send();
 	
 }
+function ajaxTrap(move,jel)
+{
+		var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('dungeon').innerHTML = this.responseText;
+            }
+        };
+		
+        xmlhttp.open("GET","view/trap.php", true);
+        xmlhttp.send();
+		$.ajax(
+		{
+			type:"GET",
+			data:{"move":move,"jel":jel},
+			url:'ajax/ajaxTrap.php',
+			async: true,
+			success:function(result)
+				{
+				var exp=result.split(",");
+				if(exp[0]==1)
+				{
+					document.getElementById("trapText").innerHTML="Sajnos nem voltál elég gyors ezért a bekaptál: "+exp[1]+" dmg-t";
+					var phpbar=document.getElementById('hpbar');
+					var maxhp=document.getElementById('maxhp').innerHTML;
+					var hp=document.getElementById('charhp').innerHTML;
+					hp=Number(hp)-Number(exp[1]);
+					document.getElementById('charhp').innerHTML=hp;
+					var procent=(Number(hp)*Number(100))/Number(maxhp);
+					phpbar.style.width=procent+"%";
+					document.getElementById('hp').innerHTML=maxhp+"/"+hp;
+					
+				}
+				else
+				{
+					document.getElementById("trapText").innerHTML="Elég gyors a reflexed és az észlelésed ezért pont kikerűlted a csapdát";
+				}
+				}
+		});
+		
+		
+	
+}
 function ajaxCatacombs()
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -1065,7 +1137,7 @@ function endTurn()
 				document.getElementById('charmove').innerHTML=result;
 				}
 		});
-		}, delay);
+		}, delay1);
 	
 }
 //console.log(gamemap);
@@ -1126,13 +1198,14 @@ function selectChar(cid,ki,kaszt,penz,lvl,kstr,fdmg,pac,kcon,kdef,kint,faj,kagi)
 	document.getElementById("charLVL").innerHTML=lvl;
 	document.getElementById("hp").innerHTML=khp+"/"+khp;
 	document.getElementById("mana").innerHTML=kmana+"/"+kmana;
-	document.getElementById("mainpages").style.backgroundImage="url('img/backgrounds/"+faj+"bcg.jpg')";
+	//document.getElementById("mainpages").style.backgroundImage="url('img/backgrounds/"+faj+"bcg.jpg')";
 	document.getElementById("charmana").innerHTML=kmana;
 	document.getElementById("manabar").setAttribute('aria-valuemax',kmana);
 	document.getElementById("manabar").setAttribute('aria-valuenow',kmana);
 	document.getElementById("charhp").innerHTML=khp;
 	document.getElementById("hpbar").setAttribute('aria-valuemax',khp);
 	document.getElementById("hpbar").setAttribute('aria-valuenow',khp);
+	document.getElementById("maxhp").innerHTML=khp;
 	
 }
 //új sor hozzá adása az event mappához

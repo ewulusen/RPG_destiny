@@ -7,7 +7,7 @@
 
 		
 	
-	<form  action="index.php" method=get>
+	<form  action="index.php" method=post>
 	<div class="cols-sm-2">
 	<div class="input-group" >
 	<span class="input-group-addon">
@@ -22,7 +22,7 @@
 	<label>Password: </label><i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
 	</span><input type=password name=psw placeholder="password" required="required"></div></div>
 	<input type=submit class="btn btn-primary" name="login" value="Login">
-	<a class="btn btn-default" href=reg.php>Registration</a>
+	<a href=# class="btn btn-default" onclick=ajaxload("regi","mainPage")>Registration</a>
 	</form>
 
 </div></div>

@@ -53,6 +53,7 @@ else
 					aria-valuemin="0" aria-valuemax="100" id="energibar" sytle="width:100%">
 					<span id="charenergy">--</span>
 					</div></div>
+					<oreo class="stealth" id="maxhp"></oreo>
 			</div>
 		</div>
 	</div>
@@ -78,7 +79,7 @@ else
                 <a href="#" class="list-group-item border2" onclick="ajaxload('main')">Város</a>
                 <a href="#" class="list-group-item border2" onclick="ajaxload('main')">Hegyek</a>
 				</div> 
-	<a href="#" class="list-group-item border2" >Kijelentkezés</a>			
+	<a href="#" onclick="logOut()" class="list-group-item border2" >Kijelentkezés</a>			
 	<a href="renew.php" class="list-group-item border2" >Nullázás</a>			
  </div>
 </div>
@@ -97,11 +98,11 @@ else
 	include_once("controller/Event.php");
 	include_once("controller/Login.php");
 	include ('view/footer.php');
-if(isset($_GET['username']) && isset($_GET['psw']) )
+if(isset($_POST['username']) && isset($_POST['psw']) )
 {
 	
 $page=new Login;
-$page->loginCheck($_GET['username'],$_GET['psw']);
+$page->loginCheck($_POST['username'],$_POST['psw']);
 }
 	if(isset($_GET['mit']) )
 		{

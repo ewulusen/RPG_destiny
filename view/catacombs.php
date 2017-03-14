@@ -45,7 +45,7 @@ echo '<table >';
 						}
 						elseif($dn[$i][$j]==6)
 						{
-						echo'<td style="background-color:green; width:10px; height:5px;"></td>';
+						echo'<td style="background-color:pink; width:10px; height:5px;"></td>';
 						}
 						elseif($dn[$i][$j]==2)
 						{
@@ -133,19 +133,19 @@ echo '<table border=3 style="border-color:#000000" id="dn">';
 						{
 							if($dn[($i+1)][$j]==7)
 							{
-							echo'<td class="dungeonLephet" onclick=ajaxStep(100,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
+							echo'<td class="dungeonLephet" onclick=ajaxTrap(100,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 							elseif($dn[($i-1)][$j]==7)
 							{
-							echo'<td class="dungeonLephet" onclick=ajaxStep(100,"p") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
+							echo'<td class="dungeonLephet" onclick=ajaxTrap(100,"p") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 							elseif($dn[$i][($j-1)]==7)
 							{
-							echo'<td class="dungeonLephet" onclick=ajaxStep(1,"p") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
+							echo'<td class="dungeonLephet" onclick=ajaxTrap(1,"p") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 							elseif($dn[$i][($j+1)]==7)
 							{
-							echo'<td class="dungeonLephet" onclick=ajaxStep(1,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
+							echo'<td class="dungeonLephet" onclick=ajaxTrap(1,"m") id="'.$dn[$i][$j].'"><img src="img\dungeon\alap.png" width=75px height=75px></td>';
 							}
 							else
 							{

@@ -19,6 +19,39 @@ var delay3=15000; //15 second
 var page;
 var enemyNumber;
 ///////////////////////////////////////////////////
+function beszel()
+{
+ var id=getCookie("pid");
+	$.ajax(
+	{
+		type:"GET",
+			url:'tesztphp.php',
+			data:"id="+id,
+			success:function(result)
+				{
+					console.log(result);
+				}
+	});
+	var ki=0;
+
+	setInterval(function() {	 
+	$.ajax(
+	{
+		type:"GET",
+			data:"id="+id,
+			url:'teszt2php.php',
+			success:function(result)
+				{
+					if(result!="hiba")
+					{
+					document.getElementById("kibeszelt").innerHTML=result;
+					ki=1;
+					}
+				}
+	});
+	}, delay);
+	
+}
 function registration()
 {
 	usern=$("#username").val();
